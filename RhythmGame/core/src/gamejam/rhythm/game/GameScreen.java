@@ -137,31 +137,28 @@ public class GameScreen implements Screen{
 			
 			arrow.getRect().y -= arrowSpeed * delta;
 			if(arrow.getRect().y + arrowWidth*.5f < 0) iter.remove();
-			if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && (arrow.getRect().y > (arrowPadding)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &&
+			if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && (arrow.getRect().y > (arrowPadding - arrowWidth)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &&
 			    arrow.getArrow().getDirection() == 0)) { 
-				successSound.play();
 				iter.remove();
-				highScore++;
+				highScore += 50;
 			}
 	
-			if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)&& (arrow.getRect().y > (arrowPadding)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &
-				arrow.getArrow().getDirection() == 1)) {
-				successSound.play();
+			if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)&& (arrow.getRect().y > (arrowPadding - arrowWidth)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &
+				arrow.getArrow().getDirection() == 1)) {				
 				iter.remove();
-				highScore++;
+				highScore += 50;
 			}
-			if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && (arrow.getRect().y > (arrowPadding)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &
-			    arrow.getArrow().getDirection() == 2)) {
-				successSound.play();
+			if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && (arrow.getRect().y > (arrowPadding - arrowWidth)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &
+			    arrow.getArrow().getDirection() == 2)) {		
 				iter.remove();
-				highScore++;
+				highScore += 50;
 			}
-			if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) && (arrow.getRect().y > (arrowPadding)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &
-				arrow.getArrow().getDirection() == 3)) {
-				successSound.play();
+			if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) && (arrow.getRect().y > (arrowPadding - arrowWidth)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &
+				arrow.getArrow().getDirection() == 3)) {				
 				iter.remove();
-				highScore++;
+				highScore += 50;
 			}
+			
 			//DO INPUT CHECKS HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		}
 		
