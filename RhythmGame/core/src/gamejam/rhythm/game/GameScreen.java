@@ -5,10 +5,13 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -50,6 +53,9 @@ public class GameScreen implements Screen{
 	private long arrowSpawnCD = 1000000000;//in nano secodns
 	private long lastArrowSpawnTime;
 	private float arrowSpeed = 300f;
+	
+	//testing
+	//ShapeRenderer shapeRender = new ShapeRenderer();
 
 	public GameScreen(final Rhythm game) {
 		this.game = game;
@@ -104,6 +110,7 @@ public class GameScreen implements Screen{
 	
 		
 		
+		
 		//draw game arrows and update arrows
 		for (Iterator<ArrowRectangle> iter = arrows.iterator(); iter.hasNext(); ) {
 			ArrowRectangle arrow = iter.next();
@@ -132,8 +139,10 @@ public class GameScreen implements Screen{
 				break;
 			}
 			
-			arrow.getRect().y -= arrowSpeed * delta;
-			if(arrow.getRect().y + arrowWidth*.5f < 0) iter.remove();
+			
+			
+			
+			
 			if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && (arrow.getRect().y > (arrowPadding)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &&
 			    arrow.getArrow().getDirection() == 0)) { 
 				successSound.play();
@@ -155,8 +164,13 @@ public class GameScreen implements Screen{
 				successSound.play();
 				iter.remove();
 			}
+			
+			
+			arrow.getRect().y -= arrowSpeed * delta;
+			if(arrow.getRect().y + arrowWidth < 0) iter.remove();
 			//DO INPUT CHECKS HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		}
+
 		
 		//stop render texture
 		batch.end();
