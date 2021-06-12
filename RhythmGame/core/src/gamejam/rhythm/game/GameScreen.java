@@ -46,8 +46,6 @@ public class GameScreen implements Screen{
 	private Texture arrowLeft;
 	private Texture arrowRight;
 	
-	int highScore;
-	
 	//music
 	Music music;
 	
@@ -120,7 +118,6 @@ public class GameScreen implements Screen{
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		//start render texture
-		font.draw(batch, "High Score: " + highScore, 40, 680);
 		
 		//draw input arrows
 		int centerX = screenCenterX - (int)(arrowWidth * 0.5f);
@@ -160,64 +157,35 @@ public class GameScreen implements Screen{
 				break;
 			}
 			
-<<<<<<< HEAD
 			
 			
 			
 			
 			if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && (arrow.getRect().y > (arrowPadding)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &&
-=======
-			arrow.getRect().y -= arrowSpeed * delta;
-			if(arrow.getRect().y + arrowWidth*.5f < 0) iter.remove();
-			if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && (arrow.getRect().y > (arrowPadding - arrowWidth)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &&
->>>>>>> origin/Mahmoud
 			    arrow.getArrow().getDirection() == 0)) { 
+				successSound.play();
 				iter.remove();
-				if (arrow.getRect().y < (arrowPadding + 20) && (arrow.getRect().y > 0)){
-					highScore += 100;
-				}
-				else {
-				highScore += 50;
-				}
 			}
 	
-			if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)&& (arrow.getRect().y > (arrowPadding - arrowWidth)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &
-				arrow.getArrow().getDirection() == 1)) {				
+			if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)&& (arrow.getRect().y > (arrowPadding)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &
+				arrow.getArrow().getDirection() == 1)) {
+				successSound.play();
 				iter.remove();
-				if (arrow.getRect().y < (arrowPadding + 20) && (arrow.getRect().y > 0)){
-					highScore += 100;
-				}
-				else {
-				highScore += 50;
-				}
 			}
-			if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && (arrow.getRect().y > (arrowPadding - arrowWidth)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &
-			    arrow.getArrow().getDirection() == 2)) {		
+			if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && (arrow.getRect().y > (arrowPadding)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &
+			    arrow.getArrow().getDirection() == 2)) {
+				successSound.play();
 				iter.remove();
-				if (arrow.getRect().y < (arrowPadding + 20) && (arrow.getRect().y > 0)){
-					highScore += 100;
-				}
-				else {
-				highScore += 50;
-				}
 			}
-			if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) && (arrow.getRect().y > (arrowPadding - arrowWidth)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &
-				arrow.getArrow().getDirection() == 3)) {				
+			if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) && (arrow.getRect().y > (arrowPadding)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &
+				arrow.getArrow().getDirection() == 3)) {
+				successSound.play();
 				iter.remove();
-				if (arrow.getRect().y < (arrowPadding + 20) && (arrow.getRect().y > 0)){
-					highScore += 100;
-				}
-				else {
-				highScore += 50;
-				}
 			}
 			
-<<<<<<< HEAD
 			
 			arrow.getRect().y -= arrowSpeed * delta;
 			if(arrow.getRect().y + arrowWidth < 0) iter.remove();
-=======
->>>>>>> origin/Mahmoud
 			//DO INPUT CHECKS HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		}
 
