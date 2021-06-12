@@ -10,6 +10,7 @@ public class DesktopLauncher {
 		config.title = "Rhythm Game";
 		config.width = 1280;
 		config.height = 720;
+		config.foregroundFPS = 60;
 		new LwjglApplication(new Rhythm(), config);
 	}
 }

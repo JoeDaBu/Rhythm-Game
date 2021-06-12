@@ -17,10 +17,10 @@ public class ArrowSequence {
 		index = 0;
 		//** TEST
 		ArrayList<Integer> TEST_DIRECTIONS = new ArrayList<>();
+		TEST_DIRECTIONS.add(0);
+		TEST_DIRECTIONS.add(2);
 		TEST_DIRECTIONS.add(1);
 		TEST_DIRECTIONS.add(3);
-		TEST_DIRECTIONS.add(2);
-		TEST_DIRECTIONS.add(4);
 		TEST_DIRECTIONS.add(-1);
 		AssignLetters(TEST_DIRECTIONS, "");
 		//** TEST
