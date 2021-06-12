@@ -9,8 +9,26 @@ public class WordPicker {
 	final String file = "assets/Words.txt";
 	public ArrayList<String> wordList;
 	
+	public float[] letterFreq;
+	
 	public WordPicker() {
 		resetWordList();
+		
+		letterFreq = new float[26];
+		int total = 0;
+		for(String word : wordList)
+			for(int i = 0; i < word.length(); i++) {
+				letterFreq[word.charAt(i) - 'a']++;
+				total++;
+			}
+		
+		for(int i = 0; i < letterFreq.length; i++)
+			letterFreq[i] /= total;
+		
+		/*
+		for(int i = 0; i < letterFreq.length; i++)
+			System.out.println((char)(i+97) + " | " + letterFreq[i]);
+		*/
 	}
 	
 	public String getWord(int length) { // length = 4,5,7,8
@@ -38,7 +56,22 @@ public class WordPicker {
 			wordList.add(word);
 	}	
 	
-	public char letterGenerator(String word) {
+	public char letterGenerator(String word, float spaceFreq, float additionalChance) {
+		if(Math.random() < spaceFreq)
+			return ' ';
+		
+		float randomNum = (float)Math.random() * (1 + additionalChance);
+		
+		for(int i = 0; i < letterFreq.length; i++) {
+			if(word.contains("" + (char)(i+97)))
+				randomNum -= (letterFreq[i] + additionalChance/word.length());
+			else
+				randomNum -= letterFreq[i];
+						
+			if(randomNum < 0)
+				return (char)(i+65);
+		}
+		
 		return ' ';
 	}
 }
