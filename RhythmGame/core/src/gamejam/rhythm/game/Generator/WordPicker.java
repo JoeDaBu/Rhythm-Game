@@ -9,6 +9,8 @@ public class WordPicker {
 	final String file = "assets/Words.txt";
 	public ArrayList<String> wordList;
 	
+	public float[] letterFreq;
+	
 	public WordPicker() {
 		resetWordList();
 	}
@@ -36,6 +38,14 @@ public class WordPicker {
 		String wordsArray[] = Gdx.files.local("words.txt").readString().split("\\r?\\n");
 		for(String word : wordsArray)
 			wordList.add(word);
+		
+		letterFreq = new float[26];
+		int total = 0;
+		for(String word : wordList)
+			for(int i = 0; i < word.length(); i++) {
+				letterFreq[word.charAt(i)]
+				total++;
+			}
 	}	
 	
 	public char letterGenerator(String word) {

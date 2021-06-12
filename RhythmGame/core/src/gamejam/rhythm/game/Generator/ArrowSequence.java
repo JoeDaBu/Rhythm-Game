@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class ArrowSequence {
 
-	
 	public WordPicker wp = new WordPicker();
 	public ArrayList<Arrow> arrowSeq;
 	public int index;
@@ -29,6 +28,13 @@ public class ArrowSequence {
 	
 	public void addArrow(Arrow arrow) {
 		arrowSeq.add(arrow);
+	}
+	
+	public void AssignLetters(ArrayList<Integer> directions) {
+		arrowSeq = new ArrayList<>();
+		
+		for(int i = 0; i < directions.size(); i++)
+			arrowSeq.add(new Arrow(' ',directions.get(i)));
 	}
 	
 	public void AssignLetters(ArrayList<Integer> directions, String word) {
