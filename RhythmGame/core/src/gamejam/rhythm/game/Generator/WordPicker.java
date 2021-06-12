@@ -35,6 +35,6 @@ public class WordPicker {
 	}	
 	
 	public char letterGenerator(String word) {
-		return '-';
+		return ' ';
 	}
 }

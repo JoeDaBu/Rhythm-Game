@@ -4,8 +4,10 @@ import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
@@ -39,6 +41,9 @@ public class GameScreen implements Screen{
 	private Texture arrowLeft;
 	private Texture arrowRight;
 	
+	//music
+	Music music;
+	
 	//game logic
 	private ArrowSequence arrowSeq;
 	private Array<ArrowRectangle> arrows;
@@ -49,7 +54,7 @@ public class GameScreen implements Screen{
 	public GameScreen(final Rhythm game) {
 		this.game = game;
 		
-		//set up textures
+		//set up assets
 		greyArrowUp = new Texture(Gdx.files.internal("arrows/arrow-grey-up.png"));
 		greyArrowDown = new Texture(Gdx.files.internal("arrows/arrow-grey-down.png"));
 		greyArrowLeft = new Texture(Gdx.files.internal("arrows/arrow-grey-left.png"));
@@ -59,6 +64,11 @@ public class GameScreen implements Screen{
 		arrowDown = new Texture(Gdx.files.internal("arrows/arrow-down.png"));
 		arrowLeft = new Texture(Gdx.files.internal("arrows/arrow-left.png"));
 		arrowRight = new Texture(Gdx.files.internal("arrows/arrow-right.png"));
+		
+		music = Gdx.audio.newMusic(Gdx.files.internal("music/Gospel (Puru's Piano Remix)- Puru.wav"));
+		music.setVolume(.5f);
+		music.setLooping(true);
+		
 		
 		//set up game view
 		camera = new OrthographicCamera();
@@ -78,6 +88,7 @@ public class GameScreen implements Screen{
 		camera.update();
 		
 		SpriteBatch batch = game.batch;
+		BitmapFont font = game.font;
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		//start render texture
@@ -93,18 +104,28 @@ public class GameScreen implements Screen{
 		//draw game arrows and update arrows
 		for (Iterator<ArrowRectangle> iter = arrows.iterator(); iter.hasNext(); ) {
 			ArrowRectangle arrow = iter.next();
+			float x;
+			float y = arrow.getRect().y;
 			switch(arrow.getArrow().getDirection()) {
 			case 0:
-				batch.draw(arrowLeft, centerX - (arrowWidth + arrowPadding)*1.5f, arrow.getRect().y, arrowWidth, arrowWidth);// left
+				x = centerX - (arrowWidth + arrowPadding)*1.5f;
+				batch.draw(arrowLeft, x, y, arrowWidth, arrowWidth);// left
+				font.draw(batch, String.valueOf(arrow.getArrow().getLetter()), x - 15 + arrowWidth*.5f, y + 25 + arrowWidth*.5f);
 				break;
 			case 1:
-				batch.draw(arrowDown, centerX - (arrowWidth + arrowPadding)*.5f, arrow.getRect().y, arrowWidth, arrowWidth);// down
+				x = centerX - (arrowWidth + arrowPadding)*.5f;
+				batch.draw(arrowDown, x, y, arrowWidth, arrowWidth);// down
+				font.draw(batch, String.valueOf(arrow.getArrow().getLetter()), x - 15 + arrowWidth*.5f, y + 25 + arrowWidth*.5f);
 				break;
 			case 2:
-				batch.draw(arrowUp, centerX + (arrowWidth + arrowPadding)*.5f, arrow.getRect().y, arrowWidth, arrowWidth);// up
+				x = centerX + (arrowWidth + arrowPadding)*.5f;
+				batch.draw(arrowUp, x, y, arrowWidth, arrowWidth);// up
+				font.draw(batch, String.valueOf(arrow.getArrow().getLetter()), x - 15 + arrowWidth*.5f, y + 25 + arrowWidth*.5f);
 				break;
 			case 3:
-				batch.draw(arrowRight, centerX + (arrowWidth + arrowPadding)*1.5f, arrow.getRect().y, arrowWidth, arrowWidth);// right
+				x = centerX + (arrowWidth + arrowPadding)*1.5f;
+				batch.draw(arrowRight, x, y, arrowWidth, arrowWidth);// right
+				font.draw(batch, String.valueOf(arrow.getArrow().getLetter()), x - 15 + arrowWidth*.5f, y + 25 + arrowWidth*.5f);
 				break;
 			}
 			
@@ -130,6 +151,7 @@ public class GameScreen implements Screen{
 		rect.height = arrowWidth;
 		
 		Arrow arrow = arrowSeq.getNextArrow(); //new Arrow('a', MathUtils.random(0, 3))
+		//arrow.setLetter('A');
 		ArrowRectangle arrowRect = new ArrowRectangle(arrow, rect);
 		//System.out.println(arrow.getDirection());
 		
@@ -139,7 +161,7 @@ public class GameScreen implements Screen{
 	
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
+		music.play();
 		
 	}
 

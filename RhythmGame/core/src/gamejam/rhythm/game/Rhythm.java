@@ -3,6 +3,7 @@ package gamejam.rhythm.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -23,6 +24,7 @@ public class Rhythm extends Game {
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("BAUHS93.TTF"));
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
 		parameter.size = 50;
+		parameter.color = Color.GREEN;
 		font = generator.generateFont(parameter);
 		generator.dispose();
 		

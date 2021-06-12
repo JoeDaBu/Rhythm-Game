@@ -2,7 +2,7 @@ package gamejam.rhythm.game.Generator;
 
 public class Arrow {
 
-	private char let = '-';
+	private char let = ' ';
 	private int dir = -1; // 0 = Left, 1 == Down, 2 = Up, 3 = Right
 	
 	public Arrow() {}
