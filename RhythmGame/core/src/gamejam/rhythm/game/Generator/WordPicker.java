@@ -13,6 +13,13 @@ public class WordPicker {
 	}
 	
 	public String getWord(int length) { // length = 4,5,7,8
+		boolean flag = false;
+		for(String word : wordList)
+			if(word.length() == length)
+				flag = true;
+		if(flag)
+			resetWordList();
+		
 		while(true) { // Yes this could potentially run forever, cry about it
 			Collections.shuffle(wordList);
 			if(wordList.get(0).length() == length)

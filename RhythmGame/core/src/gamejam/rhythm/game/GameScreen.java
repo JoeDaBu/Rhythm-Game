@@ -65,7 +65,8 @@ public class GameScreen implements Screen{
 		arrowLeft = new Texture(Gdx.files.internal("arrows/arrow-left.png"));
 		arrowRight = new Texture(Gdx.files.internal("arrows/arrow-right.png"));
 		
-		music = Gdx.audio.newMusic(Gdx.files.internal("music/Gospel (Puru's Piano Remix)- Puru.wav"));
+		//music = Gdx.audio.newMusic(Gdx.files.internal("music/Gospel (Puru's Piano Remix)- Puru.wav"));
+		music = Gdx.audio.newMusic(Gdx.files.internal("music/Zavodila Remix.wav"));
 		music.setVolume(.5f);
 		music.setLooping(true);
 		
