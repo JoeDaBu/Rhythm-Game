@@ -62,5 +62,7 @@ public class ArrowSequence {
 		return arrowSeq.get(index++);
 	}
 	
-	public void setCurrentWord(String word) { this.curWord = word; }
+	public void setCurrentWord(String curWord) { this.curWord = curWord; }
+	public void setSpaceFrequency(float spaceFreq) { this.spaceFreq = spaceFreq; }
+	public void setAdditionalChance(float additionalChance) { this.additionalChance = additionalChance; }
 }
