@@ -48,7 +48,7 @@ public class LevelFileReader {
 		}
 		//System.out.println(dirs.size());
 		ArrowSequence seq = new ArrowSequence();
-		seq.AssignLetters(dirs);
+		seq.AssignLetters(dirs, name, 0, 1);
 		
 		return new LevelClass(name, music, diff, arrowSpeed, spawnCD, seq);
 	}
