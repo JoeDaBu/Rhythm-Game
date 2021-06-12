@@ -137,7 +137,6 @@ public class GameScreen implements Screen{
 				batch.draw(arrowRight, x, y, arrowWidth, arrowWidth);// right
 				font.draw(batch, String.valueOf(arrow.getArrow().getLetter()), x - 15 + arrowWidth*.5f, y + 25 + arrowWidth*.5f);
 				break;
-<<<<<<< Updated upstream
 			}
 			
 
@@ -147,9 +146,6 @@ public class GameScreen implements Screen{
 			
 			if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && (arrow.getRect().y > (arrowPadding)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &&
 			//if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && (arrow.getRect().y > (arrowPadding)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &&
-=======
-			}		
->>>>>>> Stashed changes
 
 			arrow.getRect().y -= arrowSpeed * delta;
 			if(arrow.getRect().y + arrowWidth*.5f < 0) iter.remove();
