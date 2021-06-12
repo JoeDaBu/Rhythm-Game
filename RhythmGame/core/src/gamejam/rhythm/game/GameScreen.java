@@ -139,11 +139,18 @@ public class GameScreen implements Screen{
 				break;
 			}
 			
+
 			
 			
 			
 			
 			if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && (arrow.getRect().y > (arrowPadding)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &&
+			//if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && (arrow.getRect().y > (arrowPadding)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &&
+
+			arrow.getRect().y -= arrowSpeed * delta;
+			if(arrow.getRect().y + arrowWidth*.5f < 0) iter.remove();
+			if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && (arrow.getRect().y > (arrowPadding - arrowWidth)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &&
+
 			    arrow.getArrow().getDirection() == 0)) { 
 				successSound.play();
 				iter.remove();
@@ -168,6 +175,9 @@ public class GameScreen implements Screen{
 			
 			arrow.getRect().y -= arrowSpeed * delta;
 			if(arrow.getRect().y + arrowWidth < 0) iter.remove();
+			arrow.getRect().y -= arrowSpeed * delta;
+			if(arrow.getRect().y + arrowWidth < 0) iter.remove();
+
 			//DO INPUT CHECKS HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		}
 
