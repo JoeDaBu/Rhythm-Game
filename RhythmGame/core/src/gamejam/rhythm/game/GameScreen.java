@@ -5,16 +5,21 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import gamejam.rhythm.game.Generator.Arrow;
 import gamejam.rhythm.game.Generator.ArrowSequence;
+import gamejam.rhythm.game.fileio.LevelClass;
+import gamejam.rhythm.game.fileio.LevelFileReader;
 import gamejam.rhythm.game.tools.ArrowRectangle;
 
 import java.util.Iterator;
@@ -41,6 +46,8 @@ public class GameScreen implements Screen{
 	private Texture arrowLeft;
 	private Texture arrowRight;
 	
+	int highScore;
+	
 	//music
 	Music music;
 	
@@ -50,6 +57,13 @@ public class GameScreen implements Screen{
 	private long arrowSpawnCD = 1000000000;//in nano secodns
 	private long lastArrowSpawnTime;
 	private float arrowSpeed = 300f;
+	
+	//settings
+	private static float musicVol = 0.5f; 
+	
+	
+	//testing
+	//ShapeRenderer shapeRender = new ShapeRenderer();
 
 	public GameScreen(final Rhythm game) {
 		this.game = game;
@@ -68,7 +82,7 @@ public class GameScreen implements Screen{
 		
 		//music = Gdx.audio.newMusic(Gdx.files.internal("music/Gospel (Puru's Piano Remix)- Puru.wav"));
 		music = Gdx.audio.newMusic(Gdx.files.internal("music/Zavodila Remix.wav"));
-		music.setVolume(.5f);
+		music.setVolume(musicVol);
 		music.setLooping(true);
 		
 		
@@ -81,7 +95,19 @@ public class GameScreen implements Screen{
 		//set up game objects
 		arrowSeq = new ArrowSequence(1);
 		arrows = new Array<ArrowRectangle>();
-		generateArrow();
+		//generateArrow();
+	}
+	
+	public GameScreen(final Rhythm game, String levelName) {
+		this(game);
+		LevelClass level = LevelFileReader.getLevel(levelName);
+		arrowSeq = level.getSequence();
+		arrowSpeed = level.getArrowSpeed();
+		arrowSpawnCD = level.getSpawnCD();
+		music.dispose();
+		music = Gdx.audio.newMusic(Gdx.files.internal("music/"+level.getMusic()));
+		music.setVolume(musicVol);
+		music.setLooping(true);
 	}
 
 	@Override
@@ -94,6 +120,7 @@ public class GameScreen implements Screen{
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		//start render texture
+		font.draw(batch, "High Score: " + highScore, 40, 680);
 		
 		//draw input arrows
 		int centerX = screenCenterX - (int)(arrowWidth * 0.5f);
@@ -101,6 +128,8 @@ public class GameScreen implements Screen{
 		batch.draw(greyArrowUp, centerX + (arrowWidth + arrowPadding)*.5f, arrowPadding, arrowWidth, arrowWidth); // up
 		batch.draw(greyArrowLeft, centerX - (arrowWidth + arrowPadding)*1.5f, arrowPadding, arrowWidth, arrowWidth);// left
 		batch.draw(greyArrowRight, centerX + (arrowWidth + arrowPadding)*1.5f, arrowPadding, arrowWidth, arrowWidth);// right
+	
+		
 		
 		
 		//draw game arrows and update arrows
@@ -131,26 +160,65 @@ public class GameScreen implements Screen{
 				break;
 			}
 			
+
+			
+			
+			
+			
+			//if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && (arrow.getRect().y > (arrowPadding)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &&
+
+			//arrow.getRect().y -= arrowSpeed * delta;
+			//if(arrow.getRect().y + arrowWidth*.5f < 0) iter.remove();
+			
+			if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && (arrow.getRect().y > (arrowPadding - arrowWidth)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &&
+
+			    arrow.getArrow().getDirection() == 0)) { 
+				iter.remove();
+				if (arrow.getRect().y < (arrowPadding + 20) && (arrow.getRect().y > 0)){
+					highScore += 100;
+				}
+				else {
+				highScore += 50;
+				}
+			}
+	
+			if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)&& (arrow.getRect().y > (arrowPadding - arrowWidth)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &
+				arrow.getArrow().getDirection() == 1)) {				
+				iter.remove();
+				if (arrow.getRect().y < (arrowPadding + 20) && (arrow.getRect().y > 0)){
+					highScore += 100;
+				}
+				else {
+				highScore += 50;
+				}
+			}
+			if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && (arrow.getRect().y > (arrowPadding - arrowWidth)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &
+			    arrow.getArrow().getDirection() == 2)) {		
+				iter.remove();
+				if (arrow.getRect().y < (arrowPadding + 20) && (arrow.getRect().y > 0)){
+					highScore += 100;
+				}
+				else {
+				highScore += 50;
+				}
+			}
+			if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) && (arrow.getRect().y > (arrowPadding - arrowWidth)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &
+				arrow.getArrow().getDirection() == 3)) {				
+				iter.remove();
+				if (arrow.getRect().y < (arrowPadding + 20) && (arrow.getRect().y > 0)){
+					highScore += 100;
+				}
+				else {
+				highScore += 50;
+				}
+			}
+			
 			arrow.getRect().y -= arrowSpeed * delta;
-			if(arrow.getRect().y + arrowWidth*.5f < 0) iter.remove();
-			if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT))  {
-				successSound.play();
-//				iter.remove();
-			}
-			if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
-				successSound.play();
-//				iter.remove();
-			}
-			if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
-				successSound.play();
-//				iter.remove();
-			}
-			if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
-				successSound.play();
-//				iter.remove();
-			}
+			if(arrow.getRect().y + arrowWidth < 0) iter.remove();
+
 			//DO INPUT CHECKS HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		}
+
 		
 		//stop render texture
 		batch.end();
