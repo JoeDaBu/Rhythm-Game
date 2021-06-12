@@ -1,2 +1,3 @@
 # RhythmGame
-Mo sux
+Test
+Joes awesome
