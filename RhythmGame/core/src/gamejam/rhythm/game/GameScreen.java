@@ -160,17 +160,17 @@ public class GameScreen implements Screen{
 				break;
 			}
 			
-<<<<<<< HEAD
+
 			
 			
 			
 			
 			if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && (arrow.getRect().y > (arrowPadding)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &&
-=======
+
 			arrow.getRect().y -= arrowSpeed * delta;
 			if(arrow.getRect().y + arrowWidth*.5f < 0) iter.remove();
 			if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && (arrow.getRect().y > (arrowPadding - arrowWidth)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &&
->>>>>>> origin/Mahmoud
+
 			    arrow.getArrow().getDirection() == 0)) { 
 				iter.remove();
 				if (arrow.getRect().y < (arrowPadding + 20) && (arrow.getRect().y > 0)){
@@ -212,12 +212,9 @@ public class GameScreen implements Screen{
 				}
 			}
 			
-<<<<<<< HEAD
-			
 			arrow.getRect().y -= arrowSpeed * delta;
 			if(arrow.getRect().y + arrowWidth < 0) iter.remove();
-=======
->>>>>>> origin/Mahmoud
+
 			//DO INPUT CHECKS HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		}
 
