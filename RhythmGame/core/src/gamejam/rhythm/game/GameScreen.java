@@ -140,23 +140,43 @@ public class GameScreen implements Screen{
 			if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && (arrow.getRect().y > (arrowPadding - arrowWidth)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &&
 			    arrow.getArrow().getDirection() == 0)) { 
 				iter.remove();
+				if (arrow.getRect().y < (arrowPadding + 20) && (arrow.getRect().y > 0)){
+					highScore += 100;
+				}
+				else {
 				highScore += 50;
+				}
 			}
 	
 			if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)&& (arrow.getRect().y > (arrowPadding - arrowWidth)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &
 				arrow.getArrow().getDirection() == 1)) {				
 				iter.remove();
+				if (arrow.getRect().y < (arrowPadding + 20) && (arrow.getRect().y > 0)){
+					highScore += 100;
+				}
+				else {
 				highScore += 50;
+				}
 			}
 			if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && (arrow.getRect().y > (arrowPadding - arrowWidth)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &
 			    arrow.getArrow().getDirection() == 2)) {		
 				iter.remove();
+				if (arrow.getRect().y < (arrowPadding + 20) && (arrow.getRect().y > 0)){
+					highScore += 100;
+				}
+				else {
 				highScore += 50;
+				}
 			}
 			if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) && (arrow.getRect().y > (arrowPadding - arrowWidth)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &
 				arrow.getArrow().getDirection() == 3)) {				
 				iter.remove();
+				if (arrow.getRect().y < (arrowPadding + 20) && (arrow.getRect().y > 0)){
+					highScore += 100;
+				}
+				else {
 				highScore += 50;
+				}
 			}
 			
 			//DO INPUT CHECKS HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
