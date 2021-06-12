@@ -41,6 +41,8 @@ public class GameScreen implements Screen{
 	private Texture arrowLeft;
 	private Texture arrowRight;
 	
+	int highScore;
+	
 	//music
 	Music music;
 	
@@ -94,6 +96,7 @@ public class GameScreen implements Screen{
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		//start render texture
+		font.draw(batch, "High Score: " + highScore, 40, 680);
 		
 		//draw input arrows
 		int centerX = screenCenterX - (int)(arrowWidth * 0.5f);
@@ -138,22 +141,26 @@ public class GameScreen implements Screen{
 			    arrow.getArrow().getDirection() == 0)) { 
 				successSound.play();
 				iter.remove();
+				highScore++;
 			}
 	
 			if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)&& (arrow.getRect().y > (arrowPadding)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &
 				arrow.getArrow().getDirection() == 1)) {
 				successSound.play();
 				iter.remove();
+				highScore++;
 			}
 			if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && (arrow.getRect().y > (arrowPadding)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &
 			    arrow.getArrow().getDirection() == 2)) {
 				successSound.play();
 				iter.remove();
+				highScore++;
 			}
 			if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) && (arrow.getRect().y > (arrowPadding)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &
 				arrow.getArrow().getDirection() == 3)) {
 				successSound.play();
 				iter.remove();
+				highScore++;
 			}
 			//DO INPUT CHECKS HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		}
