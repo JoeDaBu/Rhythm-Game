@@ -159,16 +159,7 @@ public class GameScreen implements Screen{
 				font.draw(batch, String.valueOf(arrow.getArrow().getLetter()), x - 15 + arrowWidth*.5f, y + 25 + arrowWidth*.5f);
 				break;
 			}
-			
-
-			
-			
-			
-			
-			//if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && (arrow.getRect().y > (arrowPadding)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &&
-
-			//arrow.getRect().y -= arrowSpeed * delta;
-			//if(arrow.getRect().y + arrowWidth*.5f < 0) iter.remove();
+		
 			
 			if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && (arrow.getRect().y > (arrowPadding - arrowWidth)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &&
 
