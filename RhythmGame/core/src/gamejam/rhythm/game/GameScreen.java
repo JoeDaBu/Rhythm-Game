@@ -3,8 +3,10 @@ package gamejam.rhythm.game;
 import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -24,7 +26,7 @@ public class GameScreen implements Screen{
 	//setup
 	final Rhythm game;
 	private OrthographicCamera camera;
-	
+	private Sound successSound;
 	//rendering
 	private int screenCenterX;
 	private int arrowPadding = 10;
@@ -55,6 +57,7 @@ public class GameScreen implements Screen{
 		this.game = game;
 		
 		//set up assets
+		successSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
 		greyArrowUp = new Texture(Gdx.files.internal("arrows/arrow-grey-up.png"));
 		greyArrowDown = new Texture(Gdx.files.internal("arrows/arrow-grey-down.png"));
 		greyArrowLeft = new Texture(Gdx.files.internal("arrows/arrow-grey-left.png"));
@@ -132,7 +135,22 @@ public class GameScreen implements Screen{
 			
 			arrow.getRect().y -= arrowSpeed * delta;
 			if(arrow.getRect().y + arrowWidth*.5f < 0) iter.remove();
-			
+			if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT))  {
+				successSound.play();
+				iter.remove();
+			}
+			if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
+				successSound.play();
+				iter.remove();
+			}
+			if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+				successSound.play();
+				iter.remove();
+			}
+			if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
+				successSound.play();
+				iter.remove();
+			}
 			//DO INPUT CHECKS HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		}
 		
