@@ -1,7 +1,8 @@
 package gamejam.rhythm.game.Generator;
 
-import java.io.*;
 import java.util.*;
+
+import com.badlogic.gdx.Gdx;
 
 public class WordPicker {
 
@@ -30,15 +31,9 @@ public class WordPicker {
 	public void resetWordList() {
 		wordList = new ArrayList<>();
 		
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(file));
-		    String line;
-		    while ((line = br.readLine()) != null)
-		    	wordList.add(line);
-		    br.close();
-		} catch (Exception e) {
-			System.out.println("Word Picker -> getNewWord => ERROR");
-		}
+		String wordsArray[] = Gdx.files.local("words.txt").readString().split("\\r?\\n");
+		for(String word : wordsArray)
+			wordList.add(word);
 	}	
 	
 	public char letterGenerator(String word) {
