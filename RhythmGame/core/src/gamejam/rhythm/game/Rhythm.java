@@ -1,30 +1,32 @@
 package gamejam.rhythm.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
 
-public class Rhythm extends ApplicationAdapter {
-	private SpriteBatch batch;
-	private OrthographicCamera camera;
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+
+public class Rhythm extends Game {
+	
+	public SpriteBatch batch;
+	public BitmapFont font;
 	
 	
 	@Override
 	public void create () {
-		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 800, 800);
 		batch = new SpriteBatch();
-		
+		font = new BitmapFont();
+		this.setScreen(new MainMenuScreen(this));
 	}
 
 	@Override
 	public void render () {
+		super.render();
 	}
 	
 	@Override
 	public void dispose () {
 		batch.dispose();
+		font.dispose();
 	}
 }
