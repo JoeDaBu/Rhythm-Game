@@ -101,6 +101,7 @@ public class GameScreen implements Screen{
 		batch.draw(greyArrowUp, centerX + (arrowWidth + arrowPadding)*.5f, arrowPadding, arrowWidth, arrowWidth); // up
 		batch.draw(greyArrowLeft, centerX - (arrowWidth + arrowPadding)*1.5f, arrowPadding, arrowWidth, arrowWidth);// left
 		batch.draw(greyArrowRight, centerX + (arrowWidth + arrowPadding)*1.5f, arrowPadding, arrowWidth, arrowWidth);// right
+	
 		
 		
 		//draw game arrows and update arrows
@@ -133,21 +134,26 @@ public class GameScreen implements Screen{
 			
 			arrow.getRect().y -= arrowSpeed * delta;
 			if(arrow.getRect().y + arrowWidth*.5f < 0) iter.remove();
-			if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT))  {
+			if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && (arrow.getRect().y > (arrowPadding)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &&
+			    arrow.getArrow().getDirection() == 0)) { 
 				successSound.play();
-//				iter.remove();
+				iter.remove();
 			}
-			if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
+	
+			if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)&& (arrow.getRect().y > (arrowPadding)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &
+				arrow.getArrow().getDirection() == 1)) {
 				successSound.play();
-//				iter.remove();
+				iter.remove();
 			}
-			if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+			if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && (arrow.getRect().y > (arrowPadding)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &
+			    arrow.getArrow().getDirection() == 2)) {
 				successSound.play();
-//				iter.remove();
+				iter.remove();
 			}
-			if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
+			if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) && (arrow.getRect().y > (arrowPadding)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &
+				arrow.getArrow().getDirection() == 3)) {
 				successSound.play();
-//				iter.remove();
+				iter.remove();
 			}
 			//DO INPUT CHECKS HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		}
