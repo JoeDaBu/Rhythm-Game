@@ -8,6 +8,10 @@ public class WordPicker {
 	final String file = "assets/Words.txt";
 	public ArrayList<String> wordList;
 	
+	public WordPicker() {
+		resetWordList();
+	}
+	
 	public String getWord(int length) { // length = 4,5,7,8
 		while(true) { // Yes this could potentially run forever, cry about it
 			Collections.shuffle(wordList);
@@ -31,6 +35,6 @@ public class WordPicker {
 	}	
 	
 	public char letterGenerator(String word) {
-		return ' ';
+		return '-';
 	}
 }
