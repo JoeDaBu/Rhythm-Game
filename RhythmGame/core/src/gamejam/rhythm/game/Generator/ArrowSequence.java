@@ -1,12 +1,25 @@
 package gamejam.rhythm.game.Generator;
 
+import java.util.ArrayList;
+
 public class ArrowSequence {
 
-	public Arrow[] arrowSeq;
+	public WordPicker wp = new WordPicker();
+	public ArrayList<Arrow> arrowSeq;
 	
-	public ArrowSequence(int length) {
-		arrowSeq = new Arrow[length];
+	public ArrowSequence() {}
+	
+	public void addArrow(Arrow arrow) {
+		arrowSeq.add(arrow);
 	}
 	
-	public Arrow getArrow(int index) { return arrowSeq[index]; }
+	public ArrowSequence AssignLetters(ArrayList<Arrow> arrows, String word) {
+		ArrowSequence arrowSequence = new ArrowSequence();
+		
+		for(int i = 0; i < arrows.size(); i++) {
+			arrowSequence.addArrow(new Arrow(wp.letterGenerator(word),arrows.get(i).getDirection()));
+		}
+		
+		return arrowSequence;
+	}
 }
