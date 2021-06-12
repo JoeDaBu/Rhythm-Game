@@ -14,10 +14,12 @@ public class WordPicker {
 	}
 	
 	public String getWord(int length) { // length = 4,5,7,8
-		boolean flag = false;
+		boolean flag = true;
 		for(String word : wordList)
-			if(word.length() == length)
-				flag = true;
+			if(word.length() == length) {
+				flag = false;
+				break;
+			}
 		if(flag)
 			resetWordList();
 		
