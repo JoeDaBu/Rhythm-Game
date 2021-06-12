@@ -1,7 +1,5 @@
 package gamejam.rhythm.game;
 
-import java.util.Iterator;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -11,15 +9,15 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
-
 import gamejam.rhythm.game.Generator.Arrow;
 import gamejam.rhythm.game.Generator.ArrowSequence;
 import gamejam.rhythm.game.tools.ArrowRectangle;
+
+import java.util.Iterator;
 
 public class GameScreen implements Screen{
 
@@ -137,19 +135,19 @@ public class GameScreen implements Screen{
 			if(arrow.getRect().y + arrowWidth*.5f < 0) iter.remove();
 			if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT))  {
 				successSound.play();
-				iter.remove();
+//				iter.remove();
 			}
 			if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
 				successSound.play();
-				iter.remove();
+//				iter.remove();
 			}
 			if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
 				successSound.play();
-				iter.remove();
+//				iter.remove();
 			}
 			if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
 				successSound.play();
-				iter.remove();
+//				iter.remove();
 			}
 			//DO INPUT CHECKS HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		}

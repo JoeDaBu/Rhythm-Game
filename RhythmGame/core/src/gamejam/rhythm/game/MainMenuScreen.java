@@ -2,19 +2,36 @@ package gamejam.rhythm.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class MainMenuScreen implements Screen {
 
+    private static  final int PLAY_BUTTON_WIDTH = 150;
+    private static  final int PLAY_BUTTON_HEIGHT = 30;
 	final Rhythm game;
 	OrthographicCamera camera;
+	Texture exitButtonActive;
+	Texture exitButtonInactive;
+    Texture optionsButtonActive;
+    Texture optionsButtonInactive;
+    Texture scoreButtonActive;
+    Texture scoreButtonInactive;
+    Texture aboutButtonActive;
+    Texture aboutButtonInactive;
+	Texture playButtonActive;
+	Texture playButtonInactive;
 
 	public MainMenuScreen(final Rhythm game) {
 		this.game = game;
-
+		playButtonActive = new Texture(Gdx.files.internal("Buttons/play.png"));
+        playButtonInactive = new Texture(Gdx.files.internal("Buttons/play_in.png"));
+//        exitButtonActive = new Texture("exit.png");
+//        exitButtonInactive = new Texture("exit_in.png");
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 1280, 720);
+		camera.setToOrtho(false, Rhythm.WIDTH, Rhythm.HEIGHT);
 	}
 
 
@@ -29,15 +46,29 @@ public class MainMenuScreen implements Screen {
 		camera.update();
 		game.batch.setProjectionMatrix(camera.combined);
 
-		game.batch.begin();
-		game.font.draw(game.batch, "Welcome to Rhythm!!! ", 100, 150);
-		game.font.draw(game.batch, "Tap anywhere to begin!", 100, 100);
-		game.batch.end();
 
-		if (Gdx.input.isTouched()) {
-			game.setScreen(new GameScreen(game));
-			dispose();
-		}
+		Gdx.gl.glClearColor(1,0,0,1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		game.batch.begin();
+
+		if(
+		        Gdx.input.getX()> Rhythm.WIDTH/2 - PLAY_BUTTON_WIDTH/2 - 30 &&
+            Gdx.input.getX()< Rhythm.WIDTH/2 + PLAY_BUTTON_WIDTH/2 + 30 &&
+//                Gdx.input.getY()< Rhythm.HEIGHT- PLAY_BUTTON_HEIGHT-60
+        Gdx.input.getY() < Rhythm.HEIGHT - 100 &&
+                Gdx.input.getY() > Rhythm.HEIGHT - 100 - PLAY_BUTTON_HEIGHT){
+            game.batch.draw(playButtonActive, Rhythm.WIDTH/2 - PLAY_BUTTON_WIDTH/2,
+                    100,PLAY_BUTTON_WIDTH,PLAY_BUTTON_HEIGHT);
+            if (Gdx.input.isTouched()) {
+                dispose();
+                game.setScreen(new GameScreen(game));
+            }
+        } else {
+            game.batch.draw(playButtonInactive, Rhythm.WIDTH/2 - PLAY_BUTTON_WIDTH/2,
+                    100,PLAY_BUTTON_WIDTH,PLAY_BUTTON_HEIGHT);
+        }
+
+		game.batch.end();
 	}
 
 
