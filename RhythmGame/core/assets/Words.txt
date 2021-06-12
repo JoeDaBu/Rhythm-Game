@@ -61,7 +61,7 @@ cook
 cool
 cope
 copy
-CORE
+core
 cost
 crew
 crop
@@ -156,7 +156,7 @@ glad
 goal
 goes
 gold
-Golf
+golf
 gone
 good
 gray
@@ -255,7 +255,7 @@ main
 make
 male
 many
-Mark
+mark
 mass
 matt
 meal
@@ -498,13 +498,12 @@ year
 your
 zero
 zone
-
 alone
 along
 alter
 among
 anger
-Angle
+angle
 angry
 apart
 apple
@@ -1347,7 +1346,7 @@ quarter
 radical
 railway
 readily
-Reading
+reading
 reality
 realize
 receipt
@@ -1541,7 +1540,7 @@ capacity
 casualty
 catching
 category
-Catholic
+catholic
 cautious
 cellular
 ceremony
