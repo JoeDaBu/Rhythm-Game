@@ -218,5 +218,7 @@ public class GameScreen implements Screen{
 		arrowLeft.dispose();
 		arrowRight.dispose();
 		
+		music.dispose();
+		
 	}
 }
