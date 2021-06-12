@@ -6,14 +6,19 @@ public class ArrowSequence {
 
 	public WordPicker wp = new WordPicker();
 	public ArrayList<Arrow> arrowSeq;
+	
 	public int index;
+	public String curWord;
+	public float spaceFreq, additionalChance;
 	
 	public ArrowSequence() {
 		index = 0;
+		curWord = "";
 	}
 	
 	public ArrowSequence(int i) {
 		index = 0;
+		curWord = "test";
 		//** TEST
 		ArrayList<Integer> TEST_DIRECTIONS = new ArrayList<>();
 		TEST_DIRECTIONS.add(0);
@@ -21,7 +26,7 @@ public class ArrowSequence {
 		TEST_DIRECTIONS.add(1);
 		TEST_DIRECTIONS.add(3);
 		TEST_DIRECTIONS.add(-1);
-		AssignLetters(TEST_DIRECTIONS, "", 0.5f, 0f);
+		AssignLetters(TEST_DIRECTIONS);
 		//** TEST
 		
 	}
@@ -30,23 +35,32 @@ public class ArrowSequence {
 		arrowSeq.add(arrow);
 	}
 	
-	public void AssignLetters(ArrayList<Integer> directions) {
+	public void AssignLettersDefault(ArrayList<Integer> directions) {
 		arrowSeq = new ArrayList<>();
 		
 		for(int i = 0; i < directions.size(); i++)
 			arrowSeq.add(new Arrow(' ',directions.get(i)));
 	}
 	
-	public void AssignLetters(ArrayList<Integer> directions, String word, float spaceFreq, float additionalChance) {
+	public void AssignLetters(ArrayList<Integer> directions) {
 		arrowSeq = new ArrayList<>();
 		
 		for(int i = 0; i < directions.size(); i++)
-			arrowSeq.add(new Arrow(wp.letterGenerator(word, spaceFreq, additionalChance),directions.get(i)));
+			arrowSeq.add(new Arrow(wp.letterGenerator(curWord, spaceFreq, additionalChance),directions.get(i)));
+	}
+	
+	public void ResetLetters() {
+		index = 0;
+		for(int i = 0; i < arrowSeq.size(); i++)
+			arrowSeq.get(i).setLetter(wp.letterGenerator(curWord, spaceFreq, additionalChance));
 	}
 	
 	public Arrow getNextArrow() {
 		if(index == arrowSeq.size())
-			index = 0;
+			ResetLetters();
+		
 		return arrowSeq.get(index++);
 	}
+	
+	public void setCurrentWord(String word) { this.curWord = word; }
 }
