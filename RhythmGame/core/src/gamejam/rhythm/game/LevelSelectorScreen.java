@@ -75,6 +75,7 @@ public class LevelSelectorScreen implements Screen{
 				font.setColor(Color.GREEN);
 			}
 			font.draw(batch, levels[i], width*0.5f - levels[i].length() * Rhythm.FONT_SIZE *.2f, (height - levelSelectHeight*i)-Rhythm.FONT_SIZE*0.5f);
+			font.setColor(Color.GREEN);
 		}
 		
 		//End rendering
