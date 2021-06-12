@@ -21,7 +21,7 @@ public class ArrowSequence {
 		TEST_DIRECTIONS.add(1);
 		TEST_DIRECTIONS.add(3);
 		TEST_DIRECTIONS.add(-1);
-		AssignLetters(TEST_DIRECTIONS, "");
+		AssignLetters(TEST_DIRECTIONS, "", 0.5f, 0f);
 		//** TEST
 		
 	}
@@ -37,11 +37,11 @@ public class ArrowSequence {
 			arrowSeq.add(new Arrow(' ',directions.get(i)));
 	}
 	
-	public void AssignLetters(ArrayList<Integer> directions, String word) {
+	public void AssignLetters(ArrayList<Integer> directions, String word, float spaceFreq, float additionalChance) {
 		arrowSeq = new ArrayList<>();
 		
 		for(int i = 0; i < directions.size(); i++)
-			arrowSeq.add(new Arrow(wp.letterGenerator(word),directions.get(i)));
+			arrowSeq.add(new Arrow(wp.letterGenerator(word, spaceFreq, additionalChance),directions.get(i)));
 	}
 	
 	public Arrow getNextArrow() {
