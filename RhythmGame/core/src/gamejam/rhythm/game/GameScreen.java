@@ -18,6 +18,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import gamejam.rhythm.game.Generator.Arrow;
 import gamejam.rhythm.game.Generator.ArrowSequence;
+import gamejam.rhythm.game.fileio.LevelClass;
+import gamejam.rhythm.game.fileio.LevelFileReader;
 import gamejam.rhythm.game.tools.ArrowRectangle;
 
 import java.util.Iterator;
@@ -54,6 +56,10 @@ public class GameScreen implements Screen{
 	private long lastArrowSpawnTime;
 	private float arrowSpeed = 300f;
 	
+	//settings
+	private static float musicVol = 0.5f; 
+	
+	
 	//testing
 	//ShapeRenderer shapeRender = new ShapeRenderer();
 
@@ -74,7 +80,7 @@ public class GameScreen implements Screen{
 		
 		//music = Gdx.audio.newMusic(Gdx.files.internal("music/Gospel (Puru's Piano Remix)- Puru.wav"));
 		music = Gdx.audio.newMusic(Gdx.files.internal("music/Zavodila Remix.wav"));
-		music.setVolume(.5f);
+		music.setVolume(musicVol);
 		music.setLooping(true);
 		
 		
@@ -87,7 +93,19 @@ public class GameScreen implements Screen{
 		//set up game objects
 		arrowSeq = new ArrowSequence(1);
 		arrows = new Array<ArrowRectangle>();
-		generateArrow();
+		//generateArrow();
+	}
+	
+	public GameScreen(final Rhythm game, String levelName) {
+		this(game);
+		LevelClass level = LevelFileReader.getLevel(levelName);
+		arrowSeq = level.getSequence();
+		arrowSpeed = level.getArrowSpeed();
+		arrowSpawnCD = level.getSpawnCD();
+		music.dispose();
+		music = Gdx.audio.newMusic(Gdx.files.internal("music/"+level.getMusic()));
+		music.setVolume(musicVol);
+		music.setLooping(true);
 	}
 
 	@Override

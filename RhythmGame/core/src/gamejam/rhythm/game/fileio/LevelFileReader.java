@@ -37,7 +37,7 @@ public class LevelFileReader {
 		for(int i = 5; i < lines.length; i++) {
 			try {
 				int dir = Integer.valueOf(lines[i]);
-				if(i >= -1 && i<=3) {
+				if(dir >= -1 && dir<=3) {
 					dirs.add(dir);
 				}
 			}
@@ -46,6 +46,7 @@ public class LevelFileReader {
 				return null;
 			}
 		}
+		//System.out.println(dirs.size());
 		ArrowSequence seq = new ArrowSequence();
 		seq.AssignLetters(dirs);
 		
