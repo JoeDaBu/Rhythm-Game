@@ -130,8 +130,8 @@ public class GameScreen implements Screen{
 		batch.draw(greyArrowLeft, centerX - (arrowWidth + arrowPadding)*1.5f, arrowWidth, arrowWidth, arrowWidth);// left
 		batch.draw(greyArrowRight, centerX + (arrowWidth + arrowPadding)*1.5f, arrowWidth, arrowWidth, arrowWidth);// right
 
-        batch.draw(indicator, centerX - (arrowWidth + arrowPadding)*.5f, arrowWidth * 2 - (arrowPadding * 6));
-        batch.draw(indicator, centerX - (arrowWidth + arrowPadding)*.5f, arrowPadding*6 + arrowPadding /2);
+//        batch.draw(indicator, centerX - (arrowWidth + arrowPadding)*.5f, arrowWidth * 2 - (arrowPadding * 6));
+//        batch.draw(indicator, centerX - (arrowWidth + arrowPadding)*.5f, arrowPadding*6 + arrowPadding /2);
 	
 		
 		
