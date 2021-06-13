@@ -13,7 +13,7 @@ public class ArrowSequence {
 	
 	public ArrowSequence() {
 		index = 0;
-		spaceFreq = 0.5;
+		spaceFreq = 0.5f;
 		additionalChance = 0;
 		curWord = "";
 	}
