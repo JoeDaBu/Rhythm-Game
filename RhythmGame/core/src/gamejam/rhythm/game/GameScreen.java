@@ -5,13 +5,10 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -32,7 +29,7 @@ public class GameScreen implements Screen{
 	private Sound successSound;
 	//rendering
 	private int screenCenterX;
-	private int arrowPadding = 10;
+	private int arrowPadding = 20;
 	private int arrowWidth = 128;
 	
 	//assets
@@ -45,6 +42,8 @@ public class GameScreen implements Screen{
 	private Texture arrowDown;
 	private Texture arrowLeft;
 	private Texture arrowRight;
+
+	private Texture indicator;
 	
 	int highScore;
 	
@@ -74,7 +73,9 @@ public class GameScreen implements Screen{
 		greyArrowDown = new Texture(Gdx.files.internal("arrows/arrow-grey-down.png"));
 		greyArrowLeft = new Texture(Gdx.files.internal("arrows/arrow-grey-left.png"));
 		greyArrowRight = new Texture(Gdx.files.internal("arrows/arrow-grey-right.png"));
-		
+
+        indicator = new Texture("indicator.png");
+
 		arrowUp = new Texture(Gdx.files.internal("arrows/arrow-up.png"));
 		arrowDown = new Texture(Gdx.files.internal("arrows/arrow-down.png"));
 		arrowLeft = new Texture(Gdx.files.internal("arrows/arrow-left.png"));
@@ -124,10 +125,13 @@ public class GameScreen implements Screen{
 		
 		//draw input arrows
 		int centerX = screenCenterX - (int)(arrowWidth * 0.5f);
-		batch.draw(greyArrowDown, centerX - (arrowWidth + arrowPadding)*.5f, arrowPadding, arrowWidth, arrowWidth); // down
-		batch.draw(greyArrowUp, centerX + (arrowWidth + arrowPadding)*.5f, arrowPadding, arrowWidth, arrowWidth); // up
-		batch.draw(greyArrowLeft, centerX - (arrowWidth + arrowPadding)*1.5f, arrowPadding, arrowWidth, arrowWidth);// left
-		batch.draw(greyArrowRight, centerX + (arrowWidth + arrowPadding)*1.5f, arrowPadding, arrowWidth, arrowWidth);// right
+		batch.draw(greyArrowDown, centerX - (arrowWidth + arrowPadding)*.5f, arrowWidth, arrowWidth, arrowWidth); // down
+		batch.draw(greyArrowUp, centerX + (arrowWidth + arrowPadding)*.5f, arrowWidth, arrowWidth, arrowWidth); // up
+		batch.draw(greyArrowLeft, centerX - (arrowWidth + arrowPadding)*1.5f, arrowWidth, arrowWidth, arrowWidth);// left
+		batch.draw(greyArrowRight, centerX + (arrowWidth + arrowPadding)*1.5f, arrowWidth, arrowWidth, arrowWidth);// right
+
+        batch.draw(indicator, centerX - (arrowWidth + arrowPadding)*.5f, arrowWidth * 2 - (arrowPadding * 6));
+        batch.draw(indicator, centerX - (arrowWidth + arrowPadding)*.5f, arrowPadding*6 + arrowPadding /2);
 	
 		
 		
@@ -162,7 +166,7 @@ public class GameScreen implements Screen{
 			
 
 			
-			
+			int increment  = 0;
 			
 			
 			//if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && (arrow.getRect().y > (arrowPadding)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &&
@@ -170,48 +174,103 @@ public class GameScreen implements Screen{
 			//arrow.getRect().y -= arrowSpeed * delta;
 			//if(arrow.getRect().y + arrowWidth*.5f < 0) iter.remove();
 			
-			if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && (arrow.getRect().y > (arrowPadding - arrowWidth)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &&
+			if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) &&
+                    (arrow.getRect().y > (arrowPadding)) &&
+                    (arrow.getRect().y < (arrowWidth * 2)) &&
+			    arrow.getArrow().getDirection() == 0) {
+				iter.remove();
+                if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 6) &&
+                        arrow.getRect().y > (arrowPadding * 6 + arrowPadding/2)) {
+                    increment  = 200;
+                } else if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 5 + arrowPadding/2)) {
+                    increment = 100;
+                } else if (arrow.getRect().y < (arrowWidth * 2 - (arrowPadding * 5)) &&
+                        arrow.getRect().y > (arrowPadding * 5)) {
+                    increment = 50;
+                } else if (arrow.getRect().y < (arrowWidth * 2 - (arrowPadding * 4)) &&
+                        arrow.getRect().y > (arrowPadding * 4)) {
+                    increment = 30;
+                } else if (arrow.getRect().y < (arrowWidth * 2 - (arrowPadding * 2)) &&
+                        arrow.getRect().y > (arrowPadding * 2)) {
+                    increment = 20;
+                } else if (arrow.getRect().y < (arrowWidth * 2 -arrowPadding)) {
+                    increment = 10;
+                }
+                highScore += increment;
+            }
 
-			    arrow.getArrow().getDirection() == 0)) { 
+			if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN) &&
+                    (arrow.getRect().y > (arrowPadding)) &&
+                    (arrow.getRect().y < (arrowWidth * 2)) &&
+				arrow.getArrow().getDirection() == 1) {
 				iter.remove();
-				if (arrow.getRect().y < (arrowPadding + 20) && (arrow.getRect().y > 0)){
-					highScore += 100;
-				}
-				else {
-				highScore += 50;
-				}
+                if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 6) &&
+                        arrow.getRect().y > (arrowPadding * 6 + arrowPadding/2)) {
+                    increment  = 200;
+                } else if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 5 + arrowPadding/2)) {
+                    increment = 100;
+                } else if (arrow.getRect().y < (arrowWidth * 2 - (arrowPadding * 5)) &&
+                        arrow.getRect().y > (arrowPadding * 5)) {
+                    increment = 50;
+                } else if (arrow.getRect().y < (arrowWidth * 2 - (arrowPadding * 4)) &&
+                        arrow.getRect().y > (arrowPadding * 4)) {
+                    increment = 30;
+                } else if (arrow.getRect().y < (arrowWidth * 2 - (arrowPadding * 2)) &&
+                        arrow.getRect().y > (arrowPadding * 2)) {
+                    increment = 20;
+                } else if (arrow.getRect().y < (arrowWidth * 2 -arrowPadding)) {
+                    increment = 10;
+                }
+				highScore += increment;
 			}
-	
-			if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)&& (arrow.getRect().y > (arrowPadding - arrowWidth)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &
-				arrow.getArrow().getDirection() == 1)) {				
+			if (Gdx.input.isKeyJustPressed(Input.Keys.UP) &&
+                    (arrow.getRect().y > (arrowPadding)) &&
+                    (arrow.getRect().y < (arrowWidth * 2)) &&
+			    arrow.getArrow().getDirection() == 2) {
 				iter.remove();
-				if (arrow.getRect().y < (arrowPadding + 20) && (arrow.getRect().y > 0)){
-					highScore += 100;
-				}
-				else {
-				highScore += 50;
-				}
-			}
-			if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && (arrow.getRect().y > (arrowPadding - arrowWidth)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &
-			    arrow.getArrow().getDirection() == 2)) {		
+                if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 6) &&
+                        arrow.getRect().y > (arrowPadding * 6 + arrowPadding/2)) {
+                    increment  = 200;
+                } else if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 5 + arrowPadding/2)) {
+                    increment = 100;
+                } else if (arrow.getRect().y < (arrowWidth * 2 - (arrowPadding * 5)) &&
+                        arrow.getRect().y > (arrowPadding * 5)) {
+                    increment = 50;
+                } else if (arrow.getRect().y < (arrowWidth * 2 - (arrowPadding * 4)) &&
+                        arrow.getRect().y > (arrowPadding * 4)) {
+                    increment = 30;
+                } else if (arrow.getRect().y < (arrowWidth * 2 - (arrowPadding * 2)) &&
+                        arrow.getRect().y > (arrowPadding * 2)) {
+                    increment = 20;
+                } else if (arrow.getRect().y < (arrowWidth * 2 -arrowPadding)) {
+                    increment = 10;
+                }
+                highScore += increment;
+            }
+			if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) &&
+                    (arrow.getRect().y > (arrowPadding)) &&
+                    (arrow.getRect().y < (arrowWidth * 2)) &&
+				arrow.getArrow().getDirection() == 3) {
 				iter.remove();
-				if (arrow.getRect().y < (arrowPadding + 20) && (arrow.getRect().y > 0)){
-					highScore += 100;
-				}
-				else {
-				highScore += 50;
-				}
-			}
-			if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) && (arrow.getRect().y > (arrowPadding - arrowWidth)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &
-				arrow.getArrow().getDirection() == 3)) {				
-				iter.remove();
-				if (arrow.getRect().y < (arrowPadding + 20) && (arrow.getRect().y > 0)){
-					highScore += 100;
-				}
-				else {
-				highScore += 50;
-				}
-			}
+                if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 6) &&
+                        arrow.getRect().y > (arrowPadding * 6 + arrowPadding/2)) {
+                    increment  = 200;
+                } else if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 5 + arrowPadding/2)) {
+                    increment = 100;
+                } else if (arrow.getRect().y < (arrowWidth * 2 - (arrowPadding * 5)) &&
+                        arrow.getRect().y > (arrowPadding * 5)) {
+                    increment = 50;
+                } else if (arrow.getRect().y < (arrowWidth * 2 - (arrowPadding * 4)) &&
+                        arrow.getRect().y > (arrowPadding * 4)) {
+                    increment = 30;
+                } else if (arrow.getRect().y < (arrowWidth * 2 - (arrowPadding * 2)) &&
+                        arrow.getRect().y > (arrowPadding * 2)) {
+                    increment = 20;
+                } else if (arrow.getRect().y < (arrowWidth * 2 -arrowPadding)) {
+                    increment = 10;
+                }
+                highScore += increment;
+            }
 			
 			arrow.getRect().y -= arrowSpeed * delta;
 			if(arrow.getRect().y + arrowWidth < 0) iter.remove();
