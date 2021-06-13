@@ -28,6 +28,7 @@ import static java.lang.Character.toUpperCase;
 public class GameScreen implements Screen{
 
 	//setup
+    public static String levelName;
 	final Rhythm game;
 	private OrthographicCamera camera;
 	private Sound successSound;
@@ -68,6 +69,7 @@ public class GameScreen implements Screen{
 	Music music;
 
 	//game logic
+    public static Boolean paused = false;
 	private ArrowSequence arrowSeq;
 	private Array<ArrowRectangle> arrows;
 
@@ -139,7 +141,7 @@ public class GameScreen implements Screen{
 
 	}
 
-	public GameScreen(final Rhythm game, final String levelName) {
+	public GameScreen(final Rhythm game, String levelName) {
 		this.game = game;
 		//this(game);
 		//		LevelClass level = LevelFileReader.getLevel(levelName);
@@ -150,8 +152,7 @@ public class GameScreen implements Screen{
 		//		arrowSeq.setAdditionalChance(setAdditionalChance);
 		//		arrowSeq.ResetLetters();
 		//		System.out.println(currentWord);
-
-
+         this.levelName = levelName;
 
 		//set up assets
 		background = new Texture(Gdx.files.internal("coolbackground.jpg"));
@@ -203,9 +204,7 @@ public class GameScreen implements Screen{
 
 			@Override
 			public void onCompletion(Music music) {
-                endScreen.highScore = highScore;
-				game.setScreen(endScreen);
-				dispose();
+
 			}
 		});
 		
@@ -219,259 +218,266 @@ public class GameScreen implements Screen{
             game.setScreen(endScreen);
             dispose();
         }
-		ScreenUtils.clear(0, 0, 0.2f, 1);
-		camera.update();
+        if (paused) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else {
+            ScreenUtils.clear(0, 0, 0.2f, 1);
+            camera.update();
 
-		SpriteBatch batch = game.batch;
-		BitmapFont font = game.font;
-		font.setColor(Color.WHITE);
-		batch.setProjectionMatrix(camera.combined);
-		batch.begin();
-		batch.draw(background, 0, 0);
-		//start render texture
-		font.draw(batch, "Score: " + highScore, 20, 680);
-		font.draw(batch, "Word: " + currentWord, 20, 50);
-		font.draw(batch, "Target Letter: " + currentWord.charAt(wordIndex), 20, 100);
-		elapsedTime = (double)TimeUtils.timeSinceMillis(startTime)/1000;
-		font.draw(batch, "Time: " + elapsedTime, 20, 600);
+            SpriteBatch batch = game.batch;
+            BitmapFont font = game.font;
+            font.setColor(Color.WHITE);
+            batch.setProjectionMatrix(camera.combined);
+            batch.begin();
+            batch.draw(background, 0, 0);
+            //start render texture
+            font.draw(batch, "Score: " + highScore, 20, 680);
+            font.draw(batch, "Word: " + currentWord, 20, 50);
+            font.draw(batch, "Target Letter: " + currentWord.charAt(wordIndex), 20, 100);
+            elapsedTime = (double)TimeUtils.timeSinceMillis(startTime)/1000;
+            font.draw(batch, "Time: " + elapsedTime, 20, 600);
 
-		//draw input arrows
-		int centerX = screenCenterX - (int)(arrowWidth * 0.5f);
-		batch.draw(greyArrowDown, centerX - (arrowWidth + arrowPadding)*.5f, arrowWidth, arrowWidth, arrowWidth); // down
-		batch.draw(greyArrowUp, centerX + (arrowWidth + arrowPadding)*.5f, arrowWidth, arrowWidth, arrowWidth); // up
-		batch.draw(greyArrowLeft, centerX - (arrowWidth + arrowPadding)*1.5f, arrowWidth, arrowWidth, arrowWidth);// left
-		batch.draw(greyArrowRight, centerX + (arrowWidth + arrowPadding)*1.5f, arrowWidth, arrowWidth, arrowWidth);// right
-        switch (increment) {
-            case 200:
-                font.draw(batch, "marvelous", centerX, arrowPadding * 2);
-                //                batch.draw(marvelous, centerX + (arrowWidth + arrowPadding)*1.5f, arrowWidth, arrowWidth, arrowWidth);
-                break;
-            case 100:
-                font.draw(batch, "perfect", centerX, arrowPadding * 2);
-                //                batch.draw(perfect, centerX + (arrowWidth + arrowPadding)*1.5f, arrowWidth, arrowWidth, arrowWidth);
-                break;
-            case 50:
-                font.draw(batch, "great", centerX, arrowPadding * 2);
-                //batch.draw(great, centerX + (arrowWidth + arrowPadding)*1.5f, arrowWidth, arrowWidth, arrowWidth);
-                break;
-            case 30:
-                font.draw(batch, "nice", centerX, arrowPadding * 2);
-                //batch.draw(nice, centerX + (arrowWidth + arrowPadding)*1.5f, arrowWidth, arrowWidth, arrowWidth);
-                break;
-            case 20:
-                font.draw(batch, "okay", centerX, arrowPadding * 2);
-                //batch.draw(okay, centerX + (arrowWidth + arrowPadding)*1.5f, arrowWidth, arrowWidth, arrowWidth);
-                break;
-            case 10:
-                font.draw(batch, "fine", centerX, arrowPadding * 2);
-                //batch.draw(fine, centerX + (arrowWidth + arrowPadding)*1.5f, arrowWidth, arrowWidth, arrowWidth);
-                break;
-            case 0:
-                font.draw(batch, "miss", centerX, arrowPadding * 2);
-                //batch.draw(miss, centerX + (arrowWidth + arrowPadding)*1.5f, arrowWidth, arrowWidth, arrowWidth);
-                break;
-            case -200:
-                font.draw(batch, "Incorrect Letter", centerX, arrowPadding * 2);
-            default:
-        }
-
-
-		//draw game arrows and update arrows
-		for (Iterator<ArrowRectangle> iter = arrows.iterator(); iter.hasNext(); ) {
-
-
-			ArrowRectangle arrow = iter.next();
-			float x;
-			float y = arrow.getRect().y;
-			switch(arrow.getArrow().getDirection()) {
-			case 0:
-				x = centerX - (arrowWidth + arrowPadding)*1.5f;
-				batch.draw(arrowLeft, x, y, arrowWidth, arrowWidth);// left
-				font.draw(batch, String.valueOf(arrow.getArrow().getLetter()), x - 15 + arrowWidth*.5f, y + 25 + arrowWidth*.5f);
-				break;
-			case 1:
-				x = centerX - (arrowWidth + arrowPadding)*.5f;
-				batch.draw(arrowDown, x, y, arrowWidth, arrowWidth);// down
-				font.draw(batch, String.valueOf(arrow.getArrow().getLetter()), x - 15 + arrowWidth*.5f, y + 25 + arrowWidth*.5f);
-				break;
-			case 2:
-				x = centerX + (arrowWidth + arrowPadding)*.5f;
-				batch.draw(arrowUp, x, y, arrowWidth, arrowWidth);// up
-				font.draw(batch, String.valueOf(arrow.getArrow().getLetter()), x - 15 + arrowWidth*.5f, y + 25 + arrowWidth*.5f);
-				break;
-			case 3:
-				x = centerX + (arrowWidth + arrowPadding)*1.5f;
-				batch.draw(arrowRight, x, y, arrowWidth, arrowWidth);// right
-				font.draw(batch, String.valueOf(arrow.getArrow().getLetter()), x - 15 + arrowWidth*.5f, y + 25 + arrowWidth*.5f);
-				break;
-			}
-
-
-			if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && (arrow.getRect().y > (arrowPadding)) &&  (arrow.getRect().y < (2*arrowWidth) &&
-
-					arrow.getArrow().getDirection() == 0)) { 
-				iter.remove();
-				if (arrow.getArrow().getLetter() == toUpperCase(currentWord.charAt(wordIndex))) {
-					//if(currentWord.contains((String.valueOf(arrow.getArrow().getLetter()).toLowerCase()))) {
-					successSound.play();
-					wordIndex++;
-				}
-				else if (arrow.getArrow().getLetter() != toUpperCase(currentWord.charAt(wordIndex)) && (arrow.getArrow().getLetter() != ' ')) {
-					increment = -200;
-					failSound.play();
-				}
-				else if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 6) &&
-						arrow.getRect().y > (arrowPadding * 6 + arrowPadding/2)) {
-					increment  = 200;
-				} else if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 5 + arrowPadding/2)) {
-					increment = 100;
-				} else if (arrow.getRect().y < (arrowWidth * 2 - (arrowPadding * 5)) &&
-						arrow.getRect().y > (arrowPadding * 5)) {
-					increment = 50;
-				} else if (arrow.getRect().y < (arrowWidth * 2 - (arrowPadding * 4)) &&
-						arrow.getRect().y > (arrowPadding * 4)) {
-					increment = 30;
-				} else if (arrow.getRect().y < (arrowWidth * 2 - (arrowPadding * 2)) &&
-						arrow.getRect().y > (arrowPadding * 2)) {
-					increment = 20;
-				} else if (arrow.getRect().y < (arrowWidth * 2 -arrowPadding)) {
-					increment = 10;
-				} else {
-				    increment = 0;
-                }
-				highScore += increment;
-			}
-
-			if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)&& (arrow.getRect().y > (arrowPadding)) &&  (arrow.getRect().y < (2*arrowWidth) &&
-					arrow.getArrow().getDirection() == 1)) {				
-				iter.remove();
-				if (arrow.getArrow().getLetter() == toUpperCase(currentWord.charAt(wordIndex))) {
-					//if(currentWord.contains((String.valueOf(arrow.getArrow().getLetter()).toLowerCase()))) {
-					successSound.play();
-					wordIndex++;
-				}
-				else if (arrow.getArrow().getLetter() != toUpperCase(currentWord.charAt(wordIndex)) && (arrow.getArrow().getLetter() != ' ')) {
-					increment = -200;
-					failSound.play();
-				}
-				else if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 6) &&
-						arrow.getRect().y > (arrowPadding * 6 + arrowPadding/2)) {
-					increment  = 200;
-				} else if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 5 + arrowPadding/2)) {
-					increment = 100;
-				} else if (arrow.getRect().y < (arrowWidth * 2 - (arrowPadding * 5)) &&
-						arrow.getRect().y > (arrowPadding * 5)) {
-					increment = 50;
-				} else if (arrow.getRect().y < (arrowWidth * 2 - (arrowPadding * 4)) &&
-						arrow.getRect().y > (arrowPadding * 4)) {
-					increment = 30;
-				} else if (arrow.getRect().y < (arrowWidth * 2 - (arrowPadding * 2)) &&
-						arrow.getRect().y > (arrowPadding * 2)) {
-					increment = 20;
-				} else if (arrow.getRect().y < (arrowWidth * 2 -arrowPadding)) {
-					increment = 10;
-				} else {
-				    increment = 0;
-                }
-				highScore += increment;
-			}
-			if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && (arrow.getRect().y > (arrowPadding)) &&  (arrow.getRect().y < (2*arrowWidth) &&
-					arrow.getArrow().getDirection() == 2)) {		
-				iter.remove();
-				if (arrow.getArrow().getLetter() == toUpperCase(currentWord.charAt(wordIndex))) {
-					//if(currentWord.contains((String.valueOf(arrow.getArrow().getLetter()).toLowerCase()))) {
-					successSound.play();
-					wordIndex++;
-				}
-				else if (arrow.getArrow().getLetter() != toUpperCase(currentWord.charAt(wordIndex)) && (arrow.getArrow().getLetter() != ' ')) {
-					increment = -200;
-					failSound.play();
-				}
-				else if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 6) &&
-						arrow.getRect().y > (arrowPadding * 6 + arrowPadding/2)) {
-					increment  = 200;
-				} else if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 5 + arrowPadding/2)) {
-					increment = 100;
-				} else if (arrow.getRect().y < (arrowWidth * 2 - (arrowPadding * 5)) &&
-						arrow.getRect().y > (arrowPadding * 5)) {
-					increment = 50;
-				} else if (arrow.getRect().y < (arrowWidth * 2 - (arrowPadding * 4)) &&
-						arrow.getRect().y > (arrowPadding * 4)) {
-					increment = 30;
-				} else if (arrow.getRect().y < (arrowWidth * 2 - (arrowPadding * 2)) &&
-						arrow.getRect().y > (arrowPadding * 2)) {
-					increment = 20;
-				} else if (arrow.getRect().y < (arrowWidth * 2 -arrowPadding)) {
-					increment = 10;
-				} else {
-                    increment = 0;
-                }
-				highScore += increment;
-			}
-			if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) && (arrow.getRect().y > (arrowPadding)) &&  (arrow.getRect().y < (2*arrowWidth) &&
-					arrow.getArrow().getDirection() == 3)) {				
-				iter.remove();
-				if (arrow.getArrow().getLetter() == toUpperCase(currentWord.charAt(wordIndex))) {
-					//if(currentWord.contains((String.valueOf(arrow.getArrow().getLetter()).toLowerCase()))) {
-					successSound.play();
-					wordIndex++;
-				}
-				else if (arrow.getArrow().getLetter() != toUpperCase(currentWord.charAt(wordIndex)) && (arrow.getArrow().getLetter() != ' ')) {
-					increment = -200;
-					failSound.play();
-				}
-				else if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 6) &&
-						arrow.getRect().y > (arrowPadding * 6 + arrowPadding/2)) {
-					increment  = 200;
-				} else if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 5 + arrowPadding/2)) {
-					increment = 100;
-				} else if (arrow.getRect().y < (arrowWidth * 2 - (arrowPadding * 5)) &&
-						arrow.getRect().y > (arrowPadding * 5)) {
-					increment = 50;
-				} else if (arrow.getRect().y < (arrowWidth * 2 - (arrowPadding * 4)) &&
-						arrow.getRect().y > (arrowPadding * 4)) {
-					increment = 30;
-				} else if (arrow.getRect().y < (arrowWidth * 2 - (arrowPadding * 2)) &&
-						arrow.getRect().y > (arrowPadding * 2)) {
-					increment = 20;
-				} else if (arrow.getRect().y < (arrowWidth * 2 -arrowPadding)) {
-					increment = 10;
-				} else {
-                    increment = 0;
-                }
-				highScore += increment;
-			}
-
-			if(wordIndex >= currentWord.length()) {
-				currentWord = arrowSeq.wp.getWord(MathUtils.random(4, 5));
-				arrowSeq.setCurrentWord(currentWord);
-				arrowSeq.ResetLetters();
-				wordIndex = 0;
-				highScore += 500;
-			}
-
-			arrow.getRect().y -= arrowSpeed * delta;
-			if(arrow.getRect().y + arrowWidth < 0) {
-                if (arrow.getArrow().getLetter() == currentWord.charAt(wordIndex) || ' ' == arrow.getArrow().getLetter()|| arrow.getArrow().getLetter() == toUpperCase(currentWord.charAt(wordIndex))) {
-                    increment = 0;
-                }
-			    iter.remove();
-
+            //draw input arrows
+            int centerX = screenCenterX - (int)(arrowWidth * 0.5f);
+            batch.draw(greyArrowDown, centerX - (arrowWidth + arrowPadding)*.5f, arrowWidth, arrowWidth, arrowWidth); // down
+            batch.draw(greyArrowUp, centerX + (arrowWidth + arrowPadding)*.5f, arrowWidth, arrowWidth, arrowWidth); // up
+            batch.draw(greyArrowLeft, centerX - (arrowWidth + arrowPadding)*1.5f, arrowWidth, arrowWidth, arrowWidth);// left
+            batch.draw(greyArrowRight, centerX + (arrowWidth + arrowPadding)*1.5f, arrowWidth, arrowWidth, arrowWidth);// right
+            switch (increment) {
+                case 200:
+                    font.draw(batch, "marvelous", centerX, arrowPadding * 2);
+                    //                batch.draw(marvelous, centerX + (arrowWidth + arrowPadding)*1.5f, arrowWidth, arrowWidth, arrowWidth);
+                    break;
+                case 100:
+                    font.draw(batch, "perfect", centerX, arrowPadding * 2);
+                    //                batch.draw(perfect, centerX + (arrowWidth + arrowPadding)*1.5f, arrowWidth, arrowWidth, arrowWidth);
+                    break;
+                case 50:
+                    font.draw(batch, "great", centerX, arrowPadding * 2);
+                    //batch.draw(great, centerX + (arrowWidth + arrowPadding)*1.5f, arrowWidth, arrowWidth, arrowWidth);
+                    break;
+                case 30:
+                    font.draw(batch, "nice", centerX, arrowPadding * 2);
+                    //batch.draw(nice, centerX + (arrowWidth + arrowPadding)*1.5f, arrowWidth, arrowWidth, arrowWidth);
+                    break;
+                case 20:
+                    font.draw(batch, "okay", centerX, arrowPadding * 2);
+                    //batch.draw(okay, centerX + (arrowWidth + arrowPadding)*1.5f, arrowWidth, arrowWidth, arrowWidth);
+                    break;
+                case 10:
+                    font.draw(batch, "fine", centerX, arrowPadding * 2);
+                    //batch.draw(fine, centerX + (arrowWidth + arrowPadding)*1.5f, arrowWidth, arrowWidth, arrowWidth);
+                    break;
+                case 0:
+                    font.draw(batch, "miss", centerX, arrowPadding * 2);
+                    //batch.draw(miss, centerX + (arrowWidth + arrowPadding)*1.5f, arrowWidth, arrowWidth, arrowWidth);
+                    break;
+                case -200:
+                    font.draw(batch, "Incorrect Letter", centerX, arrowPadding * 2);
+                default:
             }
 
-			//DO INPUT CHECKS HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		}
+
+            //draw game arrows and update arrows
+            for (Iterator<ArrowRectangle> iter = arrows.iterator(); iter.hasNext(); ) {
 
 
-		//stop render texture
-		batch.end();
+                ArrowRectangle arrow = iter.next();
+                float x;
+                float y = arrow.getRect().y;
+                switch (arrow.getArrow().getDirection()) {
+                    case 0:
+                        x = centerX - (arrowWidth + arrowPadding) * 1.5f;
+                        batch.draw(arrowLeft, x, y, arrowWidth, arrowWidth);// left
+                        font.draw(batch, String.valueOf(arrow.getArrow().getLetter()), x - 15 + arrowWidth * .5f, y + 25 + arrowWidth * .5f);
+                        break;
+                    case 1:
+                        x = centerX - (arrowWidth + arrowPadding) * .5f;
+                        batch.draw(arrowDown, x, y, arrowWidth, arrowWidth);// down
+                        font.draw(batch, String.valueOf(arrow.getArrow().getLetter()), x - 15 + arrowWidth * .5f, y + 25 + arrowWidth * .5f);
+                        break;
+                    case 2:
+                        x = centerX + (arrowWidth + arrowPadding) * .5f;
+                        batch.draw(arrowUp, x, y, arrowWidth, arrowWidth);// up
+                        font.draw(batch, String.valueOf(arrow.getArrow().getLetter()), x - 15 + arrowWidth * .5f, y + 25 + arrowWidth * .5f);
+                        break;
+                    case 3:
+                        x = centerX + (arrowWidth + arrowPadding) * 1.5f;
+                        batch.draw(arrowRight, x, y, arrowWidth, arrowWidth);// right
+                        font.draw(batch, String.valueOf(arrow.getArrow().getLetter()), x - 15 + arrowWidth * .5f, y + 25 + arrowWidth * .5f);
+                        break;
+                }
 
-		//do updates here
-		if(TimeUtils.nanoTime() - lastArrowSpawnTime > arrowSpawnCD) generateArrow();
-		
-		if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-			pause();
-		}
+
+                if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && (arrow.getRect().y > (arrowPadding)) && (arrow.getRect().y < (2 * arrowWidth) &&
+
+                        arrow.getArrow().getDirection() == 0)) {
+                    iter.remove();
+                    if (arrow.getArrow().getLetter() == toUpperCase(currentWord.charAt(wordIndex))) {
+                        //if(currentWord.contains((String.valueOf(arrow.getArrow().getLetter()).toLowerCase()))) {
+                        successSound.play();
+                        wordIndex++;
+                    } else if (arrow.getArrow().getLetter() != toUpperCase(currentWord.charAt(wordIndex)) && (arrow.getArrow().getLetter() != ' ')) {
+                        increment = -200;
+                        failSound.play();
+                    } else if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 6) &&
+                            arrow.getRect().y > (arrowPadding * 6 + arrowPadding / 2)) {
+                        increment = 200;
+                    } else if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 5 + arrowPadding / 2)) {
+                        increment = 100;
+                    } else if (arrow.getRect().y < (arrowWidth * 2 - (arrowPadding * 5)) &&
+                            arrow.getRect().y > (arrowPadding * 5)) {
+                        increment = 50;
+                    } else if (arrow.getRect().y < (arrowWidth * 2 - (arrowPadding * 4)) &&
+                            arrow.getRect().y > (arrowPadding * 4)) {
+                        increment = 30;
+                    } else if (arrow.getRect().y < (arrowWidth * 2 - (arrowPadding * 2)) &&
+                            arrow.getRect().y > (arrowPadding * 2)) {
+                        increment = 20;
+                    } else if (arrow.getRect().y < (arrowWidth * 2 - arrowPadding)) {
+                        increment = 10;
+                    } else {
+                        increment = 0;
+                    }
+                    highScore += increment;
+                }
+
+                if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN) && (arrow.getRect().y > (arrowPadding)) && (arrow.getRect().y < (2 * arrowWidth) &&
+                        arrow.getArrow().getDirection() == 1)) {
+                    iter.remove();
+                    if (arrow.getArrow().getLetter() == toUpperCase(currentWord.charAt(wordIndex))) {
+                        //if(currentWord.contains((String.valueOf(arrow.getArrow().getLetter()).toLowerCase()))) {
+                        successSound.play();
+                        wordIndex++;
+                    } else if (arrow.getArrow().getLetter() != toUpperCase(currentWord.charAt(wordIndex)) && (arrow.getArrow().getLetter() != ' ')) {
+                        increment = -200;
+                        failSound.play();
+                    } else if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 6) &&
+                            arrow.getRect().y > (arrowPadding * 6 + arrowPadding / 2)) {
+                        increment = 200;
+                    } else if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 5 + arrowPadding / 2)) {
+                        increment = 100;
+                    } else if (arrow.getRect().y < (arrowWidth * 2 - (arrowPadding * 5)) &&
+                            arrow.getRect().y > (arrowPadding * 5)) {
+                        increment = 50;
+                    } else if (arrow.getRect().y < (arrowWidth * 2 - (arrowPadding * 4)) &&
+                            arrow.getRect().y > (arrowPadding * 4)) {
+                        increment = 30;
+                    } else if (arrow.getRect().y < (arrowWidth * 2 - (arrowPadding * 2)) &&
+                            arrow.getRect().y > (arrowPadding * 2)) {
+                        increment = 20;
+                    } else if (arrow.getRect().y < (arrowWidth * 2 - arrowPadding)) {
+                        increment = 10;
+                    } else {
+                        increment = 0;
+                    }
+                    highScore += increment;
+                }
+                if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && (arrow.getRect().y > (arrowPadding)) && (arrow.getRect().y < (2 * arrowWidth) &&
+                        arrow.getArrow().getDirection() == 2)) {
+                    iter.remove();
+                    if (arrow.getArrow().getLetter() == toUpperCase(currentWord.charAt(wordIndex))) {
+                        //if(currentWord.contains((String.valueOf(arrow.getArrow().getLetter()).toLowerCase()))) {
+                        successSound.play();
+                        wordIndex++;
+                    } else if (arrow.getArrow().getLetter() != toUpperCase(currentWord.charAt(wordIndex)) && (arrow.getArrow().getLetter() != ' ')) {
+                        increment = -200;
+                        failSound.play();
+                    } else if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 6) &&
+                            arrow.getRect().y > (arrowPadding * 6 + arrowPadding / 2)) {
+                        increment = 200;
+                    } else if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 5 + arrowPadding / 2)) {
+                        increment = 100;
+                    } else if (arrow.getRect().y < (arrowWidth * 2 - (arrowPadding * 5)) &&
+                            arrow.getRect().y > (arrowPadding * 5)) {
+                        increment = 50;
+                    } else if (arrow.getRect().y < (arrowWidth * 2 - (arrowPadding * 4)) &&
+                            arrow.getRect().y > (arrowPadding * 4)) {
+                        increment = 30;
+                    } else if (arrow.getRect().y < (arrowWidth * 2 - (arrowPadding * 2)) &&
+                            arrow.getRect().y > (arrowPadding * 2)) {
+                        increment = 20;
+                    } else if (arrow.getRect().y < (arrowWidth * 2 - arrowPadding)) {
+                        increment = 10;
+                    } else {
+                        increment = 0;
+                    }
+                    highScore += increment;
+                }
+                if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) && (arrow.getRect().y > (arrowPadding)) && (arrow.getRect().y < (2 * arrowWidth) &&
+                        arrow.getArrow().getDirection() == 3)) {
+                    iter.remove();
+                    if (arrow.getArrow().getLetter() == toUpperCase(currentWord.charAt(wordIndex))) {
+                        //if(currentWord.contains((String.valueOf(arrow.getArrow().getLetter()).toLowerCase()))) {
+                        successSound.play();
+                        wordIndex++;
+                    } else if (arrow.getArrow().getLetter() != toUpperCase(currentWord.charAt(wordIndex)) && (arrow.getArrow().getLetter() != ' ')) {
+                        increment = -200;
+                        failSound.play();
+                    } else if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 6) &&
+                            arrow.getRect().y > (arrowPadding * 6 + arrowPadding / 2)) {
+                        increment = 200;
+                    } else if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 5 + arrowPadding / 2)) {
+                        increment = 100;
+                    } else if (arrow.getRect().y < (arrowWidth * 2 - (arrowPadding * 5)) &&
+                            arrow.getRect().y > (arrowPadding * 5)) {
+                        increment = 50;
+                    } else if (arrow.getRect().y < (arrowWidth * 2 - (arrowPadding * 4)) &&
+                            arrow.getRect().y > (arrowPadding * 4)) {
+                        increment = 30;
+                    } else if (arrow.getRect().y < (arrowWidth * 2 - (arrowPadding * 2)) &&
+                            arrow.getRect().y > (arrowPadding * 2)) {
+                        increment = 20;
+                    } else if (arrow.getRect().y < (arrowWidth * 2 - arrowPadding)) {
+                        increment = 10;
+                    } else {
+                        increment = 0;
+                    }
+                    highScore += increment;
+                }
+
+                if (wordIndex >= currentWord.length()) {
+                    currentWord = arrowSeq.wp.getWord(MathUtils.random(4, 5));
+                    arrowSeq.setCurrentWord(currentWord);
+                    arrowSeq.ResetLetters();
+                    wordIndex = 0;
+                    highScore += 500;
+                }
+
+                arrow.getRect().y -= arrowSpeed * delta;
+                if (arrow.getRect().y + arrowWidth < 0) {
+                    if (arrow.getArrow().getLetter() == currentWord.charAt(wordIndex) || ' ' == arrow.getArrow().getLetter() || arrow.getArrow().getLetter() == toUpperCase(currentWord.charAt(wordIndex))) {
+                        increment = 0;
+                    }
+                    iter.remove();
+
+                }
+
+                //DO INPUT CHECKS HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            }
+
+
+            //stop render texture
+            batch.end();
+
+            //do updates here
+            if (TimeUtils.nanoTime() - lastArrowSpawnTime > arrowSpawnCD) generateArrow();
+
+            if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+                pause();
+//                endScreen.highScore = highScore;
+//                if (highScore > Rhythm.scores[0]) {
+//                    Rhythm.scores[0] = highScore;
+//                    Arrays.sort(Rhythm.scores);
+//                }
+//                game.setScreen(endScreen);
+//                dispose();
+            }
+        }
 	}
 
 	private void generateArrow() {
@@ -506,6 +512,9 @@ public class GameScreen implements Screen{
 	@Override
 	public void pause() {
 		// TODO Auto-generated method stub
+        paused = true;
+        music.pause();
+        game.setScreen(new PauseClass(game, levelName, highScore, this));
 
 	}
 

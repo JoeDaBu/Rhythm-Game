@@ -40,11 +40,13 @@ public class LevelEndScreen implements Screen{
 		this.game = game;
 		this.levelName = levelName;
 		this.highScore = highScore;
-		
+
 		playButtonActive = new Texture(Gdx.files.internal("Buttons/play.png"));
         playButtonInactive = new Texture(Gdx.files.internal("Buttons/play_in.png"));
         exitButtonActive = new Texture(Gdx.files.internal("Buttons/exit.png"));
         exitButtonInactive = new Texture(Gdx.files.internal("Buttons/exit_in.png"));
+        scoreButtonInactive = new Texture(Gdx.files.internal("Buttons/score_in.png"));
+        scoreButtonActive = new Texture(Gdx.files.internal("Buttons/score.png"));
 
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Rhythm.WIDTH, Rhythm.HEIGHT);
@@ -63,19 +65,35 @@ public class LevelEndScreen implements Screen{
 		game.batch.begin();
         if(Gdx.input.getX()> Rhythm.WIDTH/2 - PLAY_BUTTON_WIDTH/2 - 30 &&
                 Gdx.input.getX()< Rhythm.WIDTH/2 + PLAY_BUTTON_WIDTH/2 + 30 &&
-                Gdx.input.getY() < Rhythm.HEIGHT - 100 + PLAY_BUTTON_HEIGHT &&
-                Gdx.input.getY() > Rhythm.HEIGHT - 100) {
+                Gdx.input.getY() < Rhythm.HEIGHT - 100 + PLAY_BUTTON_HEIGHT*2 &&
+                Gdx.input.getY() > Rhythm.HEIGHT - 100 + PLAY_BUTTON_HEIGHT) {
             game.batch.draw(exitButtonActive, Rhythm.WIDTH / 2 - PLAY_BUTTON_WIDTH / 2,
-                    100 - PLAY_BUTTON_HEIGHT, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
+                    100 - PLAY_BUTTON_HEIGHT*2, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
             if (Gdx.input.isTouched()) {
                 Gdx.app.exit();
             }
         } else {
             game.batch.draw(exitButtonInactive, Rhythm.WIDTH/2 - PLAY_BUTTON_WIDTH/2,
+                    100 - PLAY_BUTTON_HEIGHT*2,PLAY_BUTTON_WIDTH,PLAY_BUTTON_HEIGHT);
+        }
+
+        if(Gdx.input.getX()> Rhythm.WIDTH/2 - PLAY_BUTTON_WIDTH/2 - 30 &&
+                Gdx.input.getX()< Rhythm.WIDTH/2 + PLAY_BUTTON_WIDTH/2 + 30 &&
+                Gdx.input.getY() < Rhythm.HEIGHT - 100 + PLAY_BUTTON_HEIGHT &&
+                Gdx.input.getY() > Rhythm.HEIGHT - 100) {
+            game.batch.draw(scoreButtonActive, Rhythm.WIDTH / 2 - PLAY_BUTTON_WIDTH / 2,
+                    100 - PLAY_BUTTON_HEIGHT, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
+            if (Gdx.input.isTouched()) {
+                for (int i = Rhythm.scores.length -1; i >= 0; i--) {
+                    System.out.println(Rhythm.scores[i]);
+                }
+            }
+        } else {
+            game.batch.draw(scoreButtonInactive, Rhythm.WIDTH/2 - PLAY_BUTTON_WIDTH/2,
                     100 - PLAY_BUTTON_HEIGHT,PLAY_BUTTON_WIDTH,PLAY_BUTTON_HEIGHT);
         }
 
-		if(     Gdx.input.getX()> Rhythm.WIDTH/2 - PLAY_BUTTON_WIDTH/2 - 30 &&
+        if(     Gdx.input.getX()> Rhythm.WIDTH/2 - PLAY_BUTTON_WIDTH/2 - 30 &&
                 Gdx.input.getX()< Rhythm.WIDTH/2 + PLAY_BUTTON_WIDTH/2 + 30 &&
                 Gdx.input.getY() < Rhythm.HEIGHT - 100 &&
                 Gdx.input.getY() > Rhythm.HEIGHT - 100 - PLAY_BUTTON_HEIGHT){
