@@ -37,6 +37,9 @@ public class GameScreen implements Screen{
 	private int arrowWidth = 128;
 
 	//assets
+	
+	private Texture background;
+	
 	private Texture greyArrowUp;
 	private Texture greyArrowDown;
 	private Texture greyArrowLeft;
@@ -148,6 +151,7 @@ public class GameScreen implements Screen{
 
 
 		//set up assets
+		background = new Texture(Gdx.files.internal("coolbackground.jpg"));
 		successSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
 		greyArrowUp = new Texture(Gdx.files.internal("arrows/arrow-grey-up.png"));
 		greyArrowDown = new Texture(Gdx.files.internal("arrows/arrow-grey-down.png"));
@@ -213,6 +217,7 @@ public class GameScreen implements Screen{
 		font.setColor(Color.WHITE);
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
+		batch.draw(background, 0, 0);
 		//start render texture
 		font.draw(batch, "High Score: " + highScore, 20, 680);
 		font.draw(batch, "Word: " + currentWord, 20, 50);
