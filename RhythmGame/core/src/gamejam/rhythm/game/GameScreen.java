@@ -68,8 +68,8 @@ public class GameScreen implements Screen{
 	private long arrowSpawnCD = 1000000000;//in nano secodns
 	private long lastArrowSpawnTime;
 	private float arrowSpeed = 300f;
-	private float spaceFreq = .3f;
-	private float setAdditionalChance = .5f;
+	private float spaceFreq = .8f;
+	private float setAdditionalChance = 1f;
 
 	public static String currentWord;
 	public int wordIndex = 0;
@@ -210,6 +210,7 @@ public class GameScreen implements Screen{
 
 		SpriteBatch batch = game.batch;
 		BitmapFont font = game.font;
+		font.setColor(Color.WHITE);
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		//start render texture

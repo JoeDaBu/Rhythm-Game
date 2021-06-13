@@ -23,10 +23,10 @@ public class Rhythm extends Game {
         batch = new SpriteBatch();
         //font = new BitmapFont();
 
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("BAUHS93.TTF"));
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/ALGER.TTF"));
         FreeTypeFontParameter parameter = new FreeTypeFontParameter();
         parameter.size = FONT_SIZE;
-        parameter.color = Color.GREEN;
+        parameter.color = Color.WHITE;
         font = generator.generateFont(parameter);
         generator.dispose();
 
