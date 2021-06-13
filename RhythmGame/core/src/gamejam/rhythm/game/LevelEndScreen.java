@@ -1,6 +1,7 @@
 package gamejam.rhythm.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -8,9 +9,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-public class LevelEndScreen extends MainMenuScreen{
+public class LevelEndScreen implements Screen{
 
-
+	private final Rhythm game;
 	private OrthographicCamera camera;
 
 	private String levelName = "";
@@ -36,9 +37,17 @@ public class LevelEndScreen extends MainMenuScreen{
 	Texture playButtonInactive;
 
 	public LevelEndScreen(final Rhythm game, String levelName, int highScore) {
-        super(game);
+		this.game = game;
 		this.levelName = levelName;
 		this.highScore = highScore;
+		
+		playButtonActive = new Texture(Gdx.files.internal("Buttons/play.png"));
+        playButtonInactive = new Texture(Gdx.files.internal("Buttons/play_in.png"));
+        exitButtonActive = new Texture(Gdx.files.internal("Buttons/exit.png"));
+        exitButtonInactive = new Texture(Gdx.files.internal("Buttons/exit_in.png"));
+
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false, Rhythm.WIDTH, Rhythm.HEIGHT);
 	}
 
 	@Override
