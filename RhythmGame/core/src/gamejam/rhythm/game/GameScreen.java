@@ -73,7 +73,7 @@ public class GameScreen implements Screen{
 	Music music;
 
 	//game logic
-    public static Boolean paused = false;
+    public Boolean paused = false;
 	private ArrowSequence arrowSeq;
 	private Array<ArrowRectangle> arrows;
 
@@ -544,6 +544,8 @@ public class GameScreen implements Screen{
 
 	@Override
 	public void dispose() {
+	    startTime = 0;
+	    stopTime = 0;
 		greyArrowUp.dispose();
 		greyArrowDown.dispose();
 		greyArrowLeft.dispose();

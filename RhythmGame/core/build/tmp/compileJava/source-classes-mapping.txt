@@ -4,14 +4,14 @@ gamejam/rhythm/game/tools/ArrowRectangle.java
  gamejam.rhythm.game.tools.ArrowRectangle
 gamejam/rhythm/game/Generator/Arrow.java
  gamejam.rhythm.game.Generator.Arrow
-gamejam/rhythm/game/Rhythm.java
- gamejam.rhythm.game.Rhythm
+gamejam/rhythm/game/fileio/LevelFileReader.java
+ gamejam.rhythm.game.fileio.LevelFileReader
 gamejam/rhythm/game/Generator/ArrowSequence.java
  gamejam.rhythm.game.Generator.ArrowSequence
 gamejam/rhythm/game/fileio/LevelClass.java
  gamejam.rhythm.game.fileio.LevelClass
-gamejam/rhythm/game/fileio/LevelFileReader.java
- gamejam.rhythm.game.fileio.LevelFileReader
+gamejam/rhythm/game/Rhythm.java
+ gamejam.rhythm.game.Rhythm
 gamejam/rhythm/game/MainMenuScreen.java
  gamejam.rhythm.game.MainMenuScreen
 gamejam/rhythm/game/LevelSelectorScreen.java
