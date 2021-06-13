@@ -16,6 +16,7 @@ public class Rhythm extends Game {
     public BitmapFont font;
     public static final int HEIGHT = 720;
     public static final int WIDTH = 1280;
+    public static final int FONT_SIZE = 50;
 
     @Override
     public void create () {
@@ -24,7 +25,7 @@ public class Rhythm extends Game {
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("BAUHS93.TTF"));
         FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-        parameter.size = 50;
+        parameter.size = FONT_SIZE;
         parameter.color = Color.GREEN;
         font = generator.generateFont(parameter);
         generator.dispose();
