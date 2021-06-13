@@ -29,6 +29,8 @@ public class MainMenuScreen implements Screen {
 		playButtonActive = new Texture(Gdx.files.internal("Buttons/play.png"));
         playButtonInactive = new Texture(Gdx.files.internal("Buttons/play_in.png"));
         exitButtonActive = new Texture(Gdx.files.internal("Buttons/exit.png"));
+        scoreButtonInactive = new Texture(Gdx.files.internal("Buttons/score_in.png"));
+        scoreButtonActive = new Texture(Gdx.files.internal("Buttons/score.png"));
         exitButtonInactive = new Texture(Gdx.files.internal("Buttons/exit_in.png"));
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Rhythm.WIDTH, Rhythm.HEIGHT);
@@ -50,17 +52,32 @@ public class MainMenuScreen implements Screen {
 //		Gdx.gl.glClearColor(0,0,1,1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		game.batch.begin();
+
         if(Gdx.input.getX()> Rhythm.WIDTH/2 - PLAY_BUTTON_WIDTH/2 - 30 &&
                 Gdx.input.getX()< Rhythm.WIDTH/2 + PLAY_BUTTON_WIDTH/2 + 30 &&
-                Gdx.input.getY() < Rhythm.HEIGHT - 100 + PLAY_BUTTON_HEIGHT &&
-                Gdx.input.getY() > Rhythm.HEIGHT - 100) {
+                Gdx.input.getY() < Rhythm.HEIGHT - 100 + PLAY_BUTTON_HEIGHT*2 &&
+                Gdx.input.getY() > Rhythm.HEIGHT - 100 + PLAY_BUTTON_HEIGHT) {
             game.batch.draw(exitButtonActive, Rhythm.WIDTH / 2 - PLAY_BUTTON_WIDTH / 2,
-                    100 - PLAY_BUTTON_HEIGHT, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
+                    100 - PLAY_BUTTON_HEIGHT*2, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
             if (Gdx.input.isTouched()) {
                 Gdx.app.exit();
             }
         } else {
             game.batch.draw(exitButtonInactive, Rhythm.WIDTH/2 - PLAY_BUTTON_WIDTH/2,
+                    100 - PLAY_BUTTON_HEIGHT*2,PLAY_BUTTON_WIDTH,PLAY_BUTTON_HEIGHT);
+        }
+
+        if(Gdx.input.getX()> Rhythm.WIDTH/2 - PLAY_BUTTON_WIDTH/2 - 30 &&
+                Gdx.input.getX()< Rhythm.WIDTH/2 + PLAY_BUTTON_WIDTH/2 + 30 &&
+                Gdx.input.getY() < Rhythm.HEIGHT - 100 + PLAY_BUTTON_HEIGHT &&
+                Gdx.input.getY() > Rhythm.HEIGHT - 100) {
+            game.batch.draw(scoreButtonActive, Rhythm.WIDTH / 2 - PLAY_BUTTON_WIDTH / 2,
+                    100 - PLAY_BUTTON_HEIGHT, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
+            if (Gdx.input.isTouched()) {
+//                Gdx.app.exit();
+            }
+        } else {
+            game.batch.draw(scoreButtonInactive, Rhythm.WIDTH/2 - PLAY_BUTTON_WIDTH/2,
                     100 - PLAY_BUTTON_HEIGHT,PLAY_BUTTON_WIDTH,PLAY_BUTTON_HEIGHT);
         }
 
@@ -72,8 +89,8 @@ public class MainMenuScreen implements Screen {
                     100,PLAY_BUTTON_WIDTH,PLAY_BUTTON_HEIGHT);
             if (Gdx.input.isTouched()) {
                 dispose();
-                //game.setScreen(new GameScreen(game, "Zavodila"));
-                game.setScreen(new LevelSelectorScreen(game));
+                game.setScreen(new GameScreen(game, "Zavodila"));
+                //game.setScreen(new LevelSelectorScreen(game));
             }
         } else {
             game.batch.draw(playButtonInactive, Rhythm.WIDTH/2 - PLAY_BUTTON_WIDTH/2,

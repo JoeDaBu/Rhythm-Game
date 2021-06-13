@@ -83,8 +83,8 @@ public class LevelEndScreen implements Screen{
                     100,PLAY_BUTTON_WIDTH,PLAY_BUTTON_HEIGHT);
             if (Gdx.input.isTouched()) {
                 dispose();
-                //game.setScreen(new GameScreen(game, "Zavodila"));
-                game.setScreen(new LevelSelectorScreen(game));
+                game.setScreen(new GameScreen(game, "Zavodila"));
+                //game.setScreen(new LevelSelectorScreen(game));
             }
         } else {
             game.batch.draw(playButtonInactive, Rhythm.WIDTH/2 - PLAY_BUTTON_WIDTH/2,
