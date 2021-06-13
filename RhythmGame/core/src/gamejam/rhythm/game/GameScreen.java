@@ -31,6 +31,7 @@ public class GameScreen implements Screen{
 	final Rhythm game;
 	private OrthographicCamera camera;
 	private Sound successSound;
+	private Sound failSound;
 	//rendering
 	private int screenCenterX;
 	private int arrowPadding = 20;
@@ -92,7 +93,7 @@ public class GameScreen implements Screen{
 //		this.game = game;
 //
 //		//set up assets
-//		successSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
+//		successSound = Gdx.audio.newSound(Gdx.files.internal("okayyy.wav"));
 //		greyArrowUp = new Texture(Gdx.files.internal("arrows/arrow-grey-up.png"));
 //		greyArrowDown = new Texture(Gdx.files.internal("arrows/arrow-grey-down.png"));
 //		greyArrowLeft = new Texture(Gdx.files.internal("arrows/arrow-grey-left.png"));
@@ -152,7 +153,8 @@ public class GameScreen implements Screen{
 
 		//set up assets
 		background = new Texture(Gdx.files.internal("coolbackground.jpg"));
-		successSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
+		successSound = Gdx.audio.newSound(Gdx.files.internal("okayyy.wav"));
+		failSound = Gdx.audio.newSound(Gdx.files.internal("failsound.wav"));
 		greyArrowUp = new Texture(Gdx.files.internal("arrows/arrow-grey-up.png"));
 		greyArrowDown = new Texture(Gdx.files.internal("arrows/arrow-grey-down.png"));
 		greyArrowLeft = new Texture(Gdx.files.internal("arrows/arrow-grey-left.png"));
@@ -275,6 +277,7 @@ public class GameScreen implements Screen{
 				}
 				else if (arrow.getArrow().getLetter() != Character.toUpperCase(currentWord.charAt(wordIndex)) && (arrow.getArrow().getLetter() != ' ')) {
 					increment -= 200;
+					failSound.play();
 				}
 				else if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 6) &&
 						arrow.getRect().y > (arrowPadding * 6 + arrowPadding/2)) {
@@ -306,6 +309,7 @@ public class GameScreen implements Screen{
 				}
 				else if (arrow.getArrow().getLetter() != Character.toUpperCase(currentWord.charAt(wordIndex)) && (arrow.getArrow().getLetter() != ' ')) {
 					increment -= 200;
+					failSound.play();
 				}
 				else if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 6) &&
 						arrow.getRect().y > (arrowPadding * 6 + arrowPadding/2)) {
@@ -336,6 +340,7 @@ public class GameScreen implements Screen{
 				}
 				else if (arrow.getArrow().getLetter() != Character.toUpperCase(currentWord.charAt(wordIndex)) && (arrow.getArrow().getLetter() != ' ')) {
 					increment -= 200;
+					failSound.play();
 				}
 				else if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 6) &&
 						arrow.getRect().y > (arrowPadding * 6 + arrowPadding/2)) {
@@ -366,6 +371,7 @@ public class GameScreen implements Screen{
 				}
 				else if (arrow.getArrow().getLetter() != Character.toUpperCase(currentWord.charAt(wordIndex)) && (arrow.getArrow().getLetter() != ' ')) {
 					increment -= 200;
+					failSound.play();
 				}
 				else if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 6) &&
 						arrow.getRect().y > (arrowPadding * 6 + arrowPadding/2)) {
