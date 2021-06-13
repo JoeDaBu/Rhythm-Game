@@ -20,7 +20,7 @@ public class LevelSelectorScreen implements Screen{
 	int levelSelectHeight = 100;
 	
 	//variables
-	static FileHandle directory = Gdx.files.local("levels");
+	//	static FileHandle directory = Gdx.files.local("levels");
 	String[] levels;
 	
 	public LevelSelectorScreen(final Rhythm game) {
@@ -29,8 +29,9 @@ public class LevelSelectorScreen implements Screen{
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Rhythm.WIDTH, Rhythm.HEIGHT);
 		
-		levels = directory.file().list();
-		
+//		levels = directory.file().list();
+//
+        levels = new String[] {"Gospel", "Zavodila"};
 		System.out.println("Levels: ");
 		for(int i = 0; i< levels.length; i++) {
 			System.out.println(levels[i]);
