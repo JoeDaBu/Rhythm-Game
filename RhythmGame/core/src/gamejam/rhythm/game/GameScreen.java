@@ -43,6 +43,14 @@ public class GameScreen implements Screen{
 	private Texture arrowLeft;
 	private Texture arrowRight;
 
+    private Texture miss;
+    private Texture okay;
+    private Texture great;
+    private Texture perfect;
+    private Texture marvelous;
+    private Texture nice;
+    private Texture fine;
+
 	private Texture indicator;
 	
 	int highScore;
@@ -53,7 +61,7 @@ public class GameScreen implements Screen{
 	//game logic
 	private ArrowSequence arrowSeq;
 	private Array<ArrowRectangle> arrows;
-	private long arrowSpawnCD = 1000000000;//in nano secodns
+	private long arrowSpawnCD = 1000000000;//in nano seconds
 	private long lastArrowSpawnTime;
 	private float arrowSpeed = 300f;
 	
@@ -74,7 +82,14 @@ public class GameScreen implements Screen{
 		greyArrowLeft = new Texture(Gdx.files.internal("arrows/arrow-grey-left.png"));
 		greyArrowRight = new Texture(Gdx.files.internal("arrows/arrow-grey-right.png"));
 
-        indicator = new Texture("indicator.png");
+        miss = new Texture(Gdx.files.internal("arrows/arrow-grey-up.png"));
+        fine = new Texture(Gdx.files.internal("arrows/arrow-grey-up.png"));
+        okay = new Texture(Gdx.files.internal("arrows/arrow-grey-up.png"));
+        nice = new Texture(Gdx.files.internal("arrows/arrow-grey-up.png"));
+        great = new Texture(Gdx.files.internal("arrows/arrow-grey-up.png"));
+        perfect = new Texture(Gdx.files.internal("arrows/arrow-grey-up.png"));
+        marvelous = new Texture(Gdx.files.internal("arrows/arrow-grey-up.png"));
+
 
 		arrowUp = new Texture(Gdx.files.internal("arrows/arrow-up.png"));
 		arrowDown = new Texture(Gdx.files.internal("arrows/arrow-down.png"));
@@ -132,9 +147,9 @@ public class GameScreen implements Screen{
 
 //        batch.draw(indicator, centerX - (arrowWidth + arrowPadding)*.5f, arrowWidth * 2 - (arrowPadding * 6));
 //        batch.draw(indicator, centerX - (arrowWidth + arrowPadding)*.5f, arrowPadding*6 + arrowPadding /2);
-	
-		
-		
+
+
+
 		
 		//draw game arrows and update arrows
 		for (Iterator<ArrowRectangle> iter = arrows.iterator(); iter.hasNext(); ) {
@@ -165,8 +180,8 @@ public class GameScreen implements Screen{
 			}
 			
 
-			
-			int increment  = 0;
+
+			int increment  = -1;
 			
 			
 			//if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && (arrow.getRect().y > (arrowPadding)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &&
@@ -271,6 +286,37 @@ public class GameScreen implements Screen{
                 }
                 highScore += increment;
             }
+
+            switch (increment) {
+                case 200:
+                    font.draw(batch, "marvelous", 40, 500);
+//                    batch.draw(marvelous, centerX + (arrowWidth + arrowPadding)*1.5f, arrowWidth, arrowWidth, arrowWidth);
+                    break;
+                case 100:
+                    font.draw(batch, "perfect", 40, 500);
+//                    batch.draw(perfect, centerX + (arrowWidth + arrowPadding)*1.5f, arrowWidth, arrowWidth, arrowWidth);
+                    break;
+                case 50:
+                    font.draw(batch, "great", 40, 500);
+                    //batch.draw(great, centerX + (arrowWidth + arrowPadding)*1.5f, arrowWidth, arrowWidth, arrowWidth);
+                    break;
+                case 30:
+                    font.draw(batch, "nice", 40, 500);
+                    //batch.draw(nice, centerX + (arrowWidth + arrowPadding)*1.5f, arrowWidth, arrowWidth, arrowWidth);
+                    break;
+                case 20:
+                    font.draw(batch, "okay", 40, 500);
+                    //batch.draw(okay, centerX + (arrowWidth + arrowPadding)*1.5f, arrowWidth, arrowWidth, arrowWidth);
+                    break;
+                case 10:
+                    font.draw(batch, "fine", 40, 500);
+                    //batch.draw(fine, centerX + (arrowWidth + arrowPadding)*1.5f, arrowWidth, arrowWidth, arrowWidth);
+                    break;
+                case 0:
+                    font.draw(batch, "miss", 40, 500);
+                    //batch.draw(miss, centerX + (arrowWidth + arrowPadding)*1.5f, arrowWidth, arrowWidth, arrowWidth);
+                    break;
+            }
 			
 			arrow.getRect().y -= arrowSpeed * delta;
 			if(arrow.getRect().y + arrowWidth < 0) iter.remove();
@@ -286,6 +332,27 @@ public class GameScreen implements Screen{
 		if(TimeUtils.nanoTime() - lastArrowSpawnTime > arrowSpawnCD) generateArrow();
 		
 	}
+
+//	private void hitpopup (int increment) {
+//	    switch (increment) {
+//            case 200:
+//                batch.draw(greyArrowRight, centerX + (arrowWidth + arrowPadding)*1.5f, arrowWidth, arrowWidth, arrowWidth);// right
+//                break;
+//            case 100:
+//                break;
+//            case 50:
+//                break;
+//            case 30:
+//                break;
+//            case 20:
+//                break;
+//            case 10:
+//                break;
+//            default:
+//                break;
+//        }
+//
+//    }
 	
 	private void generateArrow() {
 		Rectangle rect = new Rectangle();
