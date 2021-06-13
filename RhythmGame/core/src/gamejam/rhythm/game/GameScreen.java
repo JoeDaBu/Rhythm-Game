@@ -38,7 +38,8 @@ public class GameScreen implements Screen{
 	private int arrowWidth = 128;
 
 	//assets
-	
+	private long startTime = TimeUtils.millis();
+	private double elapsedTime;
 	private Texture background;
 	
 	private Texture greyArrowUp;
@@ -224,6 +225,8 @@ public class GameScreen implements Screen{
 		font.draw(batch, "High Score: " + highScore, 20, 680);
 		font.draw(batch, "Word: " + currentWord, 20, 50);
 		font.draw(batch, "Target Letter: " + currentWord.charAt(wordIndex), 20, 100);
+		elapsedTime = (double)TimeUtils.timeSinceMillis(startTime)/1000;
+		font.draw(batch, "Time: " + elapsedTime, 20, 600);
 
 		//draw input arrows
 		int centerX = screenCenterX - (int)(arrowWidth * 0.5f);
