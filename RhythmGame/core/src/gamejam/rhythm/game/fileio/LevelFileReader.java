@@ -1,13 +1,15 @@
 package gamejam.rhythm.game.fileio;
 
 import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
+import gamejam.rhythm.game.GameScreen;
 import gamejam.rhythm.game.Generator.ArrowSequence;
 
 public class LevelFileReader {
+	
+
 	public static LevelClass getLevel(String fileName) {
 		FileHandle handle = Gdx.files.local("levels/"+fileName);
 		String text = handle.readString();
@@ -48,11 +50,7 @@ public class LevelFileReader {
 		}
 		//System.out.println(dirs.size());
 		ArrowSequence seq = new ArrowSequence();
-		
-		seq.setCurrentWord("");
-		seq.setSpaceFrequency(0.3f);
-		seq.setAdditionalChance(0.0f);
-		
+	
 		seq.AssignLetters(dirs);
 		
 		return new LevelClass(name, music, diff, arrowSpeed, spawnCD, seq);

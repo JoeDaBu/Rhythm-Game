@@ -57,9 +57,10 @@ public class GameScreen implements Screen{
 	private long arrowSpawnCD = 1000000000;//in nano secodns
 	private long lastArrowSpawnTime;
 	private float arrowSpeed = 300f;
-	private String currentWord;
+	public static String currentWord;
 	//settings
 	private static float musicVol = 0.5f; 
+	
 	
 	
 	//testing
@@ -91,13 +92,17 @@ public class GameScreen implements Screen{
 		camera.setToOrtho(false, 1280, 720);
 		screenCenterX = (int) (camera.viewportWidth/2);
 		//System.out.println(camera.viewportWidth);
-		
+
 		//set up game objects
 		arrowSeq = new ArrowSequence(1);
+		currentWord = arrowSeq.wp.getWord(4);
+		arrowSeq.setCurrentWord(currentWord);
+		arrowSeq.setSpaceFrequency(0f);
+		arrowSeq.setAdditionalChance(10f);
+
 		arrows = new Array<ArrowRectangle>();
 		//generateArrow();
-		
-		currentWord = arrowSeq.wp.getWord(4);
+
 	}
 	
 	public GameScreen(final Rhythm game, String levelName) {
@@ -168,6 +173,9 @@ public class GameScreen implements Screen{
 
 			    arrow.getArrow().getDirection() == 0)) { 
 				iter.remove();
+				if (arrow.getArrow().getLetter() == currentWord.charAt(0)) {
+					successSound.play();
+					}
 				if (arrow.getRect().y < (arrowPadding + 20) && (arrow.getRect().y > 0)){
 					highScore += 100;
 				}
@@ -179,6 +187,9 @@ public class GameScreen implements Screen{
 			if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)&& (arrow.getRect().y > (arrowPadding - arrowWidth)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &
 				arrow.getArrow().getDirection() == 1)) {				
 				iter.remove();
+				if (arrow.getArrow().getLetter() == currentWord.charAt(1)) {
+					successSound.play();
+				}
 				if (arrow.getRect().y < (arrowPadding + 20) && (arrow.getRect().y > 0)){
 					highScore += 100;
 				}
@@ -189,6 +200,9 @@ public class GameScreen implements Screen{
 			if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && (arrow.getRect().y > (arrowPadding - arrowWidth)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &
 			    arrow.getArrow().getDirection() == 2)) {		
 				iter.remove();
+				if (arrow.getArrow().getLetter() == currentWord.charAt(2)) {
+					successSound.play();
+				}
 				if (arrow.getRect().y < (arrowPadding + 20) && (arrow.getRect().y > 0)){
 					highScore += 100;
 				}
@@ -199,6 +213,9 @@ public class GameScreen implements Screen{
 			if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) && (arrow.getRect().y > (arrowPadding - arrowWidth)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &
 				arrow.getArrow().getDirection() == 3)) {				
 				iter.remove();
+				if (arrow.getArrow().getLetter() == currentWord.charAt(3)) {
+					successSound.play();
+				}
 				if (arrow.getRect().y < (arrowPadding + 20) && (arrow.getRect().y > 0)){
 					highScore += 100;
 				}
