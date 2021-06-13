@@ -159,6 +159,8 @@ public class MainMenuScreen implements Screen {
 		playButtonInactive.dispose();
 		exitButtonActive.dispose();
 		exitButtonInactive.dispose();
+        scoreButtonInactive.dispose();
+        scoreButtonActive.dispose();
 	}
 
 }

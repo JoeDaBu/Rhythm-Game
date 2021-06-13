@@ -107,7 +107,13 @@ public class PauseClass implements Screen{
             game.batch.draw(playButtonActive, Rhythm.WIDTH / 2 - PLAY_BUTTON_WIDTH / 2,
                     100 - PLAY_BUTTON_HEIGHT, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
             if (Gdx.input.isTouched()) {
+                gameScreen.dispose();
                 dispose();
+//                try {
+//                    Thread.sleep(100);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
                 game.setScreen(new GameScreen(game, "Zavodila"));
                 //game.setScreen(new LevelSelectorScreen(game));
             }
@@ -123,7 +129,7 @@ public class PauseClass implements Screen{
             game.batch.draw(resumeButtonActive, Rhythm.WIDTH/2 - PLAY_BUTTON_WIDTH/2,
                     100,PLAY_BUTTON_WIDTH,PLAY_BUTTON_HEIGHT);
             if (Gdx.input.isTouched()) {
-                GameScreen.paused = false;
+                gameScreen.paused = false;
                 dispose();
                 gameScreen.resume();
                 game.setScreen(gameScreen);
@@ -184,9 +190,14 @@ public class PauseClass implements Screen{
     @Override
     public void dispose() {
         // TODO Auto-generated method stub
+
         playButtonActive.dispose();
         playButtonInactive.dispose();
         exitButtonActive.dispose();
         exitButtonInactive.dispose();
+        resumeButtonActive.dispose();
+        resumeButtonInactive.dispose();
+        scoreButtonInactive.dispose();
+        scoreButtonActive.dispose();
     }
 }

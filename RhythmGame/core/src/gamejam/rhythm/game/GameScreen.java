@@ -73,7 +73,7 @@ public class GameScreen implements Screen{
 	Music music;
 
 	//game logic
-    public static Boolean paused = false;
+    public Boolean paused = false;
 	private ArrowSequence arrowSeq;
 	private Array<ArrowRectangle> arrows;
 

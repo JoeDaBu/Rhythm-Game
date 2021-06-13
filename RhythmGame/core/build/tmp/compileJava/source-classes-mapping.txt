@@ -16,10 +16,10 @@ gamejam/rhythm/game/MainMenuScreen.java
  gamejam.rhythm.game.MainMenuScreen
 gamejam/rhythm/game/LevelSelectorScreen.java
  gamejam.rhythm.game.LevelSelectorScreen
+gamejam/rhythm/game/LevelEndScreen.java
+ gamejam.rhythm.game.LevelEndScreen
 gamejam/rhythm/game/GameScreen.java
  gamejam.rhythm.game.GameScreen
  gamejam.rhythm.game.GameScreen$1
-gamejam/rhythm/game/LevelEndScreen.java
- gamejam.rhythm.game.LevelEndScreen
 gamejam/rhythm/game/PauseClass.java
  gamejam.rhythm.game.PauseClass
