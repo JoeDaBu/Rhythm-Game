@@ -24,6 +24,7 @@ public class PauseClass implements Screen{
     private static  final int PLAY_BUTTON_WIDTH = 150;
     private static  final int PLAY_BUTTON_HEIGHT = 30;
 
+    private Boolean display = false;
 
     Texture exitButtonActive;
     Texture exitButtonInactive;
@@ -91,12 +92,8 @@ public class PauseClass implements Screen{
             game.batch.draw(scoreButtonActive, Rhythm.WIDTH / 2 - PLAY_BUTTON_WIDTH / 2,
                     100 - PLAY_BUTTON_HEIGHT*2, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
             if (Gdx.input.isTouched()) {
-                game.font.draw(game.batch, "Scores", 20, Rhythm.HEIGHT -10);
-                game.font.draw(game.batch, "1." + Rhythm.scores[4], 20, Rhythm.HEIGHT -60);
-                game.font.draw(game.batch, "2." + Rhythm.scores[3], 20, Rhythm.HEIGHT -110);
-                game.font.draw(game.batch, "3." + Rhythm.scores[2], 20, Rhythm.HEIGHT -160);
-                game.font.draw(game.batch, "4." + Rhythm.scores[1], 20, Rhythm.HEIGHT -210);
-                game.font.draw(game.batch, "5." + Rhythm.scores[0], 20, Rhythm.HEIGHT -260);
+                display = display ? false:true;
+
             }
         } else {
             game.batch.draw(scoreButtonInactive, Rhythm.WIDTH/2 - PLAY_BUTTON_WIDTH/2,
@@ -134,6 +131,15 @@ public class PauseClass implements Screen{
         } else {
             game.batch.draw(resumeButtonInactive, Rhythm.WIDTH/2 - PLAY_BUTTON_WIDTH/2,
                     100,PLAY_BUTTON_WIDTH,PLAY_BUTTON_HEIGHT);
+        }
+
+        if (display) {
+            game.font.draw(game.batch, "Scores", 20, Rhythm.HEIGHT -10);
+            game.font.draw(game.batch, "1." + Rhythm.scores[4], 20, Rhythm.HEIGHT -60);
+            game.font.draw(game.batch, "2." + Rhythm.scores[3], 20, Rhythm.HEIGHT -110);
+            game.font.draw(game.batch, "3." + Rhythm.scores[2], 20, Rhythm.HEIGHT -160);
+            game.font.draw(game.batch, "4." + Rhythm.scores[1], 20, Rhythm.HEIGHT -210);
+            game.font.draw(game.batch, "5." + Rhythm.scores[0], 20, Rhythm.HEIGHT -260);
         }
 
         font.draw(batch, levelName, width*0.5f - levelName.length() * Rhythm.FONT_SIZE *.2f, height - Rhythm.FONT_SIZE);
