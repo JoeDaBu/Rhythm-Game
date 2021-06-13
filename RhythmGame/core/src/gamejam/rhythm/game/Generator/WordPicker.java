@@ -51,7 +51,7 @@ public class WordPicker {
 	public void resetWordList() {
 		wordList = new ArrayList<>();
 		
-		String wordsArray[] = Gdx.files.local("words.txt").readString().split("\\r?\\n");
+		String wordsArray[] = Gdx.files.local("Words.txt").readString().split("\\r?\\n");
 		for(String word : wordsArray)
 			wordList.add(word);
 	}	
