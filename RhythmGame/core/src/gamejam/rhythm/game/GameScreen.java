@@ -267,7 +267,10 @@ public class GameScreen implements Screen{
 					successSound.play();
 					wordIndex++;
 				}
-				if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 6) &&
+				else if (arrow.getArrow().getLetter() != Character.toUpperCase(currentWord.charAt(wordIndex)) && (arrow.getArrow().getLetter() != ' ')) {
+					increment -= 200;
+				}
+				else if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 6) &&
 						arrow.getRect().y > (arrowPadding * 6 + arrowPadding/2)) {
 					increment  = 200;
 				} else if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 5 + arrowPadding/2)) {
@@ -295,7 +298,10 @@ public class GameScreen implements Screen{
 					successSound.play();
 					wordIndex++;
 				}
-				if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 6) &&
+				else if (arrow.getArrow().getLetter() != Character.toUpperCase(currentWord.charAt(wordIndex)) && (arrow.getArrow().getLetter() != ' ')) {
+					increment -= 200;
+				}
+				else if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 6) &&
 						arrow.getRect().y > (arrowPadding * 6 + arrowPadding/2)) {
 					increment  = 200;
 				} else if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 5 + arrowPadding/2)) {
@@ -322,7 +328,10 @@ public class GameScreen implements Screen{
 					successSound.play();
 					wordIndex++;
 				}
-				if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 6) &&
+				else if (arrow.getArrow().getLetter() != Character.toUpperCase(currentWord.charAt(wordIndex)) && (arrow.getArrow().getLetter() != ' ')) {
+					increment -= 200;
+				}
+				else if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 6) &&
 						arrow.getRect().y > (arrowPadding * 6 + arrowPadding/2)) {
 					increment  = 200;
 				} else if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 5 + arrowPadding/2)) {
@@ -349,7 +358,10 @@ public class GameScreen implements Screen{
 					successSound.play();
 					wordIndex++;
 				}
-				if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 6) &&
+				else if (arrow.getArrow().getLetter() != Character.toUpperCase(currentWord.charAt(wordIndex)) && (arrow.getArrow().getLetter() != ' ')) {
+					increment -= 200;
+				}
+				else if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 6) &&
 						arrow.getRect().y > (arrowPadding * 6 + arrowPadding/2)) {
 					increment  = 200;
 				} else if (arrow.getRect().y < arrowWidth * 2 - (arrowPadding * 5 + arrowPadding/2)) {
