@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFont
 
 public class Rhythm extends Game {
 
+    public static final int scores[] = new int[5];
     public SpriteBatch batch;
     public BitmapFont font;
     public static final int HEIGHT = 720;
@@ -22,7 +23,6 @@ public class Rhythm extends Game {
     public void create () {
         batch = new SpriteBatch();
         //font = new BitmapFont();
-
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/ALGER.TTF"));
         FreeTypeFontParameter parameter = new FreeTypeFontParameter();
         parameter.size = FONT_SIZE;
