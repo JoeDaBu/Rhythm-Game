@@ -223,6 +223,7 @@ public class GameScreen implements Screen{
 		//start render texture
 		font.draw(batch, "High Score: " + highScore, 20, 680);
 		font.draw(batch, "Word: " + currentWord, 20, 50);
+		font.draw(batch, "Target Letter: " + currentWord.charAt(wordIndex), 20, 100);
 
 		//draw input arrows
 		int centerX = screenCenterX - (int)(arrowWidth * 0.5f);
