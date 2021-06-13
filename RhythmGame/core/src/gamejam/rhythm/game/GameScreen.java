@@ -61,6 +61,9 @@ public class GameScreen implements Screen{
 	private Texture nice;
 	private Texture fine;
 
+	private static double resumeTime;
+    private static double stopTime = 0;
+
 	int highScore = 0;
     int increment  = -2;
 	//Reference<Integer> score;
@@ -238,8 +241,8 @@ public class GameScreen implements Screen{
             font.draw(batch, "Score: " + highScore, 20, 680);
             font.draw(batch, "Word: " + currentWord, 20, 50);
             font.draw(batch, "Target Letter: " + currentWord.charAt(wordIndex), 20, 100);
-            elapsedTime = (double)TimeUtils.timeSinceMillis(startTime)/1000;
-            font.draw(batch, "Time: " + elapsedTime, 20, 600);
+            elapsedTime = (((double)TimeUtils.timeSinceMillis(startTime)/1000) + stopTime);
+            font.draw(batch, "Time: " + String.format("%.3f", elapsedTime), 20, 600);
 
             //draw input arrows
             int centerX = screenCenterX - (int)(arrowWidth * 0.5f);
@@ -513,6 +516,7 @@ public class GameScreen implements Screen{
 	public void pause() {
 		// TODO Auto-generated method stub
         paused = true;
+        stopTime = elapsedTime;
         music.pause();
         game.setScreen(new PauseClass(game, levelName, highScore, this));
 
@@ -521,6 +525,7 @@ public class GameScreen implements Screen{
 	@Override
 	public void resume() {
 		// TODO Auto-generated method stub
+        startTime = TimeUtils.millis();
 
 	}
 

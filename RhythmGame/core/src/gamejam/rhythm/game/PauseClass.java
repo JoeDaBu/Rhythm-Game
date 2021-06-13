@@ -125,6 +125,7 @@ public class PauseClass implements Screen{
             if (Gdx.input.isTouched()) {
                 GameScreen.paused = false;
                 dispose();
+                gameScreen.resume();
                 game.setScreen(gameScreen);
             }
         } else {
