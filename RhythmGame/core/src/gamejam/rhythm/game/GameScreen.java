@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -58,10 +59,12 @@ public class GameScreen implements Screen{
 	private long arrowSpawnCD = 1000000000;//in nano secodns
 	private long lastArrowSpawnTime;
 	private float arrowSpeed = 300f;
-	private float spaceFreq = .5f;
-	private float setAdditionalChance = 10f;
+	private float spaceFreq = .3f;
+	private float setAdditionalChance = .5f;
 	
 	public static String currentWord;
+	public int wordIndex = 0;
+	
 	//settings
 	private static float musicVol = 0.5f; 
 	
@@ -119,6 +122,7 @@ public class GameScreen implements Screen{
 		arrowSeq.setSpaceFrequency(spaceFreq);
 		arrowSeq.setAdditionalChance(setAdditionalChance);
 		arrowSeq.ResetLetters();
+		System.out.println(currentWord);
 		
 		arrowSpeed = level.getArrowSpeed();
 		arrowSpawnCD = level.getSpawnCD();
@@ -184,8 +188,9 @@ public class GameScreen implements Screen{
 
 			    arrow.getArrow().getDirection() == 0)) { 
 				iter.remove();
-				if (arrow.getArrow().getLetter() == Character.toUpperCase(currentWord.charAt(0))) {
+				if (arrow.getArrow().getLetter() == Character.toUpperCase(currentWord.charAt(wordIndex))) {
 					successSound.play();
+					wordIndex++;
 					}
 				if (arrow.getRect().y < (arrowPadding + 20) && (arrow.getRect().y > 0)){
 					highScore += 100;
@@ -198,8 +203,9 @@ public class GameScreen implements Screen{
 			if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)&& (arrow.getRect().y > (arrowPadding - arrowWidth)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &
 				arrow.getArrow().getDirection() == 1)) {				
 				iter.remove();
-				if (arrow.getArrow().getLetter() == currentWord.charAt(1)) {
+				if (arrow.getArrow().getLetter() == Character.toUpperCase(currentWord.charAt(wordIndex))) {
 					successSound.play();
+					wordIndex++;
 				}
 				if (arrow.getRect().y < (arrowPadding + 20) && (arrow.getRect().y > 0)){
 					highScore += 100;
@@ -211,8 +217,9 @@ public class GameScreen implements Screen{
 			if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && (arrow.getRect().y > (arrowPadding - arrowWidth)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &
 			    arrow.getArrow().getDirection() == 2)) {		
 				iter.remove();
-				if (arrow.getArrow().getLetter() == currentWord.charAt(2)) {
+				if (arrow.getArrow().getLetter() == Character.toUpperCase(currentWord.charAt(wordIndex))) {
 					successSound.play();
+					wordIndex++;
 				}
 				if (arrow.getRect().y < (arrowPadding + 20) && (arrow.getRect().y > 0)){
 					highScore += 100;
@@ -224,8 +231,9 @@ public class GameScreen implements Screen{
 			if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) && (arrow.getRect().y > (arrowPadding - arrowWidth)) &&  (arrow.getRect().y < (arrowPadding + arrowWidth) &
 				arrow.getArrow().getDirection() == 3)) {				
 				iter.remove();
-				if (arrow.getArrow().getLetter() == currentWord.charAt(3)) {
+				if (arrow.getArrow().getLetter() == Character.toUpperCase(currentWord.charAt(wordIndex))) {
 					successSound.play();
+					wordIndex++;
 				}
 				if (arrow.getRect().y < (arrowPadding + 20) && (arrow.getRect().y > 0)){
 					highScore += 100;
@@ -233,6 +241,13 @@ public class GameScreen implements Screen{
 				else {
 				highScore += 50;
 				}
+			}
+			
+			if(wordIndex >= currentWord.length()) {
+				currentWord = arrowSeq.wp.getWord(MathUtils.random(4, 5));
+				arrowSeq.setCurrentWord(currentWord);
+				arrowSeq.ResetLetters();
+				wordIndex = 0;
 			}
 			
 			arrow.getRect().y -= arrowSpeed * delta;
