@@ -54,9 +54,13 @@ public class GameScreen implements Screen{
 	//game logic
 	private ArrowSequence arrowSeq;
 	private Array<ArrowRectangle> arrows;
+	
 	private long arrowSpawnCD = 1000000000;//in nano secodns
 	private long lastArrowSpawnTime;
 	private float arrowSpeed = 300f;
+	private float spaceFreq = .5f;
+	private float setAdditionalChance = 10f;
+	
 	public static String currentWord;
 	//settings
 	private static float musicVol = 0.5f; 
@@ -97,9 +101,10 @@ public class GameScreen implements Screen{
 		arrowSeq = new ArrowSequence(1);
 		currentWord = arrowSeq.wp.getWord(4);
 		arrowSeq.setCurrentWord(currentWord);
-		arrowSeq.setSpaceFrequency(0f);
-		arrowSeq.setAdditionalChance(10f);
-
+		arrowSeq.setSpaceFrequency(spaceFreq);
+		arrowSeq.setAdditionalChance(setAdditionalChance);
+		arrowSeq.ResetLetters();
+		
 		arrows = new Array<ArrowRectangle>();
 		//generateArrow();
 
@@ -109,6 +114,12 @@ public class GameScreen implements Screen{
 		this(game);
 		LevelClass level = LevelFileReader.getLevel(levelName);
 		arrowSeq = level.getSequence();
+		currentWord = arrowSeq.wp.getWord(4);
+		arrowSeq.setCurrentWord(currentWord);
+		arrowSeq.setSpaceFrequency(spaceFreq);
+		arrowSeq.setAdditionalChance(setAdditionalChance);
+		arrowSeq.ResetLetters();
+		
 		arrowSpeed = level.getArrowSpeed();
 		arrowSpawnCD = level.getSpawnCD();
 		music.dispose();
@@ -173,7 +184,7 @@ public class GameScreen implements Screen{
 
 			    arrow.getArrow().getDirection() == 0)) { 
 				iter.remove();
-				if (arrow.getArrow().getLetter() == currentWord.charAt(0)) {
+				if (arrow.getArrow().getLetter() == Character.toUpperCase(currentWord.charAt(0))) {
 					successSound.play();
 					}
 				if (arrow.getRect().y < (arrowPadding + 20) && (arrow.getRect().y > 0)){
