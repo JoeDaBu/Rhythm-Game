@@ -91,9 +91,12 @@ public class PauseClass implements Screen{
             game.batch.draw(scoreButtonActive, Rhythm.WIDTH / 2 - PLAY_BUTTON_WIDTH / 2,
                     100 - PLAY_BUTTON_HEIGHT*2, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
             if (Gdx.input.isTouched()) {
-                for (int i = Rhythm.scores.length -1; i >= 0; i--) {
-                    System.out.println(Rhythm.scores[i]);
-                }
+                game.font.draw(game.batch, "Scores", 20, Rhythm.HEIGHT -10);
+                game.font.draw(game.batch, "1." + Rhythm.scores[4], 20, Rhythm.HEIGHT -60);
+                game.font.draw(game.batch, "2." + Rhythm.scores[3], 20, Rhythm.HEIGHT -110);
+                game.font.draw(game.batch, "3." + Rhythm.scores[2], 20, Rhythm.HEIGHT -160);
+                game.font.draw(game.batch, "4." + Rhythm.scores[1], 20, Rhythm.HEIGHT -210);
+                game.font.draw(game.batch, "5." + Rhythm.scores[0], 20, Rhythm.HEIGHT -260);
             }
         } else {
             game.batch.draw(scoreButtonInactive, Rhythm.WIDTH/2 - PLAY_BUTTON_WIDTH/2,

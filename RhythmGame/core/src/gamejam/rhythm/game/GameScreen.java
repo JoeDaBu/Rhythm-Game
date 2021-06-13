@@ -21,6 +21,7 @@ import gamejam.rhythm.game.fileio.LevelClass;
 import gamejam.rhythm.game.fileio.LevelFileReader;
 import gamejam.rhythm.game.tools.ArrowRectangle;
 
+import java.util.Arrays;
 import java.util.Iterator;
 
 import static java.lang.Character.toUpperCase;
@@ -207,7 +208,13 @@ public class GameScreen implements Screen{
 
 			@Override
 			public void onCompletion(Music music) {
-
+			    if (highScore > Rhythm.scores[0]) {
+			        Rhythm.scores[0] = highScore;
+                    Arrays.sort(Rhythm.scores);
+                }
+                endScreen.highScore = highScore;
+                game.setScreen(endScreen);
+                dispose();
 			}
 		});
 		
@@ -471,14 +478,14 @@ public class GameScreen implements Screen{
             if (TimeUtils.nanoTime() - lastArrowSpawnTime > arrowSpawnCD) generateArrow();
 
             if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-                pause();
-//                endScreen.highScore = highScore;
-//                if (highScore > Rhythm.scores[0]) {
-//                    Rhythm.scores[0] = highScore;
-//                    Arrays.sort(Rhythm.scores);
-//                }
-//                game.setScreen(endScreen);
-//                dispose();
+//                pause();
+                endScreen.highScore = highScore;
+                if (highScore > Rhythm.scores[0]) {
+                    Rhythm.scores[0] = highScore;
+                    Arrays.sort(Rhythm.scores);
+                }
+                game.setScreen(endScreen);
+                dispose();
             }
         }
 	}
